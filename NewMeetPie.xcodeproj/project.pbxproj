@@ -12,16 +12,15 @@
 		D70DD73428D0B60700DDCFF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D70DD73328D0B60700DDCFF0 /* Assets.xcassets */; };
 		D70DD73728D0B60700DDCFF0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D70DD73628D0B60700DDCFF0 /* Preview Assets.xcassets */; };
 		D70DD73E28D0BAFB00DDCFF0 /* MeetingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70DD73D28D0BAFB00DDCFF0 /* MeetingDetailView.swift */; };
-		D71593CB28D2743900857B5D /* MeetingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71593CA28D2743800857B5D /* MeetingData.swift */; };
-		D718572128D706F6000F046D /* MicrophoneMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D718572028D706F6000F046D /* MicrophoneMonitor.swift */; };
+		D71593CB28D2743900857B5D /* MeetingLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71593CA28D2743800857B5D /* MeetingLimits.swift */; };
 		D718572428D707A7000F046D /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = D718572328D707A7000F046D /* DequeModule */; };
-		D718572628D707F2000F046D /* SoundResultsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D718572528D707F2000F046D /* SoundResultsObserver.swift */; };
 		D718572A28D709D1000F046D /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D718572928D709D1000F046D /* MonitorView.swift */; };
-		D742704F28F2FF0900A9010B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D742704E28F2FF0900A9010B /* AppState.swift */; };
+		D79193DE295B05F9004E7B1A /* MeetingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79193DD295B05F9004E7B1A /* MeetingModel.swift */; };
+		D7B2B22F2948F03B00D23296 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2B22E2948F03B00D23296 /* Constants.swift */; };
 		D7C9923528DCF95200991B71 /* Constants and Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9923428DCF95200991B71 /* Constants and Globals.swift */; };
 		D7C9923728E06D0B00991B71 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9923628E06D0B00991B71 /* SummaryView.swift */; };
+		D7CC4BE5294241A700997849 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC4BE4294241A700997849 /* BLEManager.swift */; };
 		D7E65C9428EE13F900C07064 /* LayFlatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E65C9328EE13F900C07064 /* LayFlatView.swift */; };
-		D7E65CB028EF07B700C07064 /* MotionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E65CAF28EF07B700C07064 /* MotionChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,15 +30,15 @@
 		D70DD73328D0B60700DDCFF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D70DD73628D0B60700DDCFF0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D70DD73D28D0BAFB00DDCFF0 /* MeetingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailView.swift; sourceTree = "<group>"; };
-		D71593CA28D2743800857B5D /* MeetingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingData.swift; sourceTree = "<group>"; };
-		D718572028D706F6000F046D /* MicrophoneMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneMonitor.swift; sourceTree = "<group>"; };
-		D718572528D707F2000F046D /* SoundResultsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResultsObserver.swift; sourceTree = "<group>"; };
+		D71593CA28D2743800857B5D /* MeetingLimits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingLimits.swift; sourceTree = "<group>"; };
 		D718572928D709D1000F046D /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
-		D742704E28F2FF0900A9010B /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		D79193DD295B05F9004E7B1A /* MeetingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingModel.swift; sourceTree = "<group>"; };
+		D7B2B22D29473A1900D23296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D7B2B22E2948F03B00D23296 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D7C9923428DCF95200991B71 /* Constants and Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants and Globals.swift"; sourceTree = "<group>"; };
 		D7C9923628E06D0B00991B71 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		D7CC4BE4294241A700997849 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		D7E65C9328EE13F900C07064 /* LayFlatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayFlatView.swift; sourceTree = "<group>"; };
-		D7E65CAF28EF07B700C07064 /* MotionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +56,7 @@
 		D70DD72328D0B60600DDCFF0 = {
 			isa = PBXGroup;
 			children = (
-				D70DD72E28D0B60600DDCFF0 /* Profiles */,
+				D70DD72E28D0B60600DDCFF0 /* NewMeetPie */,
 				D70DD72D28D0B60600DDCFF0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,17 +69,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D70DD72E28D0B60600DDCFF0 /* Profiles */ = {
+		D70DD72E28D0B60600DDCFF0 /* NewMeetPie */ = {
 			isa = PBXGroup;
 			children = (
+				D7B2B22D29473A1900D23296 /* Info.plist */,
 				D7E65CB328F086D000C07064 /* Views */,
 				D7E65CB228F086B800C07064 /* Constants */,
 				D7E65CB128F0869800C07064 /* Models */,
 				D70DD72F28D0B60600DDCFF0 /* ProfilesApp.swift */,
 				D70DD73328D0B60700DDCFF0 /* Assets.xcassets */,
 				D70DD73528D0B60700DDCFF0 /* Preview Content */,
+				D7B2B22E2948F03B00D23296 /* Constants.swift */,
 			);
-			path = Profiles;
+			path = NewMeetPie;
 			sourceTree = "<group>";
 		};
 		D70DD73528D0B60700DDCFF0 /* Preview Content */ = {
@@ -94,11 +95,9 @@
 		D7E65CB128F0869800C07064 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D718572528D707F2000F046D /* SoundResultsObserver.swift */,
-				D718572028D706F6000F046D /* MicrophoneMonitor.swift */,
-				D7E65CAF28EF07B700C07064 /* MotionChecker.swift */,
-				D71593CA28D2743800857B5D /* MeetingData.swift */,
-				D742704E28F2FF0900A9010B /* AppState.swift */,
+				D79193DD295B05F9004E7B1A /* MeetingModel.swift */,
+				D71593CA28D2743800857B5D /* MeetingLimits.swift */,
+				D7CC4BE4294241A700997849 /* BLEManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,9 +125,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D70DD72B28D0B60600DDCFF0 /* Profiles */ = {
+		D70DD72B28D0B60600DDCFF0 /* NewMeetPie */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D70DD73A28D0B60700DDCFF0 /* Build configuration list for PBXNativeTarget "Profiles" */;
+			buildConfigurationList = D70DD73A28D0B60700DDCFF0 /* Build configuration list for PBXNativeTarget "NewMeetPie" */;
 			buildPhases = (
 				D70DD72828D0B60600DDCFF0 /* Sources */,
 				D70DD72928D0B60600DDCFF0 /* Frameworks */,
@@ -138,7 +137,7 @@
 			);
 			dependencies = (
 			);
-			name = Profiles;
+			name = NewMeetPie;
 			packageProductDependencies = (
 				D718572328D707A7000F046D /* DequeModule */,
 			);
@@ -161,7 +160,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D70DD72728D0B60600DDCFF0 /* Build configuration list for PBXProject "Profiles" */;
+			buildConfigurationList = D70DD72728D0B60600DDCFF0 /* Build configuration list for PBXProject "NewMeetPie" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -177,7 +176,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D70DD72B28D0B60600DDCFF0 /* Profiles */,
+				D70DD72B28D0B60600DDCFF0 /* NewMeetPie */,
 			);
 		};
 /* End PBXProject section */
@@ -200,14 +199,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D70DD73228D0B60600DDCFF0 /* ContentView.swift in Sources */,
+				D79193DE295B05F9004E7B1A /* MeetingModel.swift in Sources */,
 				D718572A28D709D1000F046D /* MonitorView.swift in Sources */,
-				D71593CB28D2743900857B5D /* MeetingData.swift in Sources */,
-				D742704F28F2FF0900A9010B /* AppState.swift in Sources */,
-				D718572628D707F2000F046D /* SoundResultsObserver.swift in Sources */,
+				D71593CB28D2743900857B5D /* MeetingLimits.swift in Sources */,
+				D7B2B22F2948F03B00D23296 /* Constants.swift in Sources */,
+				D7CC4BE5294241A700997849 /* BLEManager.swift in Sources */,
 				D70DD73028D0B60600DDCFF0 /* ProfilesApp.swift in Sources */,
-				D7E65CB028EF07B700C07064 /* MotionChecker.swift in Sources */,
 				D7E65C9428EE13F900C07064 /* LayFlatView.swift in Sources */,
-				D718572128D706F6000F046D /* MicrophoneMonitor.swift in Sources */,
 				D70DD73E28D0BAFB00DDCFF0 /* MeetingDetailView.swift in Sources */,
 				D7C9923528DCF95200991B71 /* Constants and Globals.swift in Sources */,
 				D7C9923728E06D0B00991B71 /* SummaryView.swift in Sources */,
@@ -339,11 +337,14 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Profiles/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"NewMeetPie/Preview Content\"";
 				DEVELOPMENT_TEAM = 564J86N8B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_FILE = NewMeetPie/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Meet Pie";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Meet Pie requires bletooth";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires permission to use the microphone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -356,8 +357,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sjdevlin.Profiles;
+				PRODUCT_BUNDLE_IDENTIFIER = sjdevlin.NewMeetPie;
 				PRODUCT_NAME = Mete;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -372,11 +376,14 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Profiles/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"NewMeetPie/Preview Content\"";
 				DEVELOPMENT_TEAM = 564J86N8B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_FILE = NewMeetPie/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Meet Pie";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Meet Pie requires bletooth";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires permission to use the microphone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -389,8 +396,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sjdevlin.Profiles;
+				PRODUCT_BUNDLE_IDENTIFIER = sjdevlin.NewMeetPie;
 				PRODUCT_NAME = Mete;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -400,7 +410,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D70DD72728D0B60600DDCFF0 /* Build configuration list for PBXProject "Profiles" */ = {
+		D70DD72728D0B60600DDCFF0 /* Build configuration list for PBXProject "NewMeetPie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D70DD73828D0B60700DDCFF0 /* Debug */,
@@ -409,7 +419,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D70DD73A28D0B60700DDCFF0 /* Build configuration list for PBXNativeTarget "Profiles" */ = {
+		D70DD73A28D0B60700DDCFF0 /* Build configuration list for PBXNativeTarget "NewMeetPie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D70DD73B28D0B60700DDCFF0 /* Debug */,

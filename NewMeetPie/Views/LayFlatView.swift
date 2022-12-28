@@ -10,13 +10,16 @@ import CoreMotion
 
 struct LayFlat: View {
 
-    @StateObject var motion = Motion()
     let limits:MeetingLimits
+
+    // maybe we dont need environment object below
+    @EnvironmentObject var bleConnection:BLEManager
+    @State var delayFinished:Bool = false
     
     var body: some View {
         VStack(alignment: .center)
         {
-            NavigationLink(destination: MonitorView(limits: limits), isActive: $motion.isFlat,
+            NavigationLink(destination: MonitorView(limits: limits), isActive: $delayFinished,
                            label: { EmptyView() }
             ).navigationBarHidden(true)
                 .navigationBarBackButtonHidden(true)
@@ -31,12 +34,14 @@ struct LayFlat: View {
                 .resizable()
                 .frame(width: 200, height:200)
                 .scaledToFit()
+                .onAppear(perform: {DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    delayFinished = true
+                    }
+                })
+                
             Spacer()
-        }.onAppear(
-            perform: {motion.startMonitoring()
-            })
+        }
     }
-    
 }
         
         struct Sheet_Previews: PreviewProvider {

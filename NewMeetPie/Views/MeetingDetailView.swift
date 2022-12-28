@@ -11,9 +11,7 @@ import SwiftUI
 
 struct IntDoubleBinding {
     let intValue : Binding<Int>
-    
     let doubleValue : Binding<Double>
-    
     init(_ intValue : Binding<Int>) {
         self.intValue = intValue
         
@@ -29,7 +27,10 @@ struct IntDoubleBinding {
 struct DetailView: View
 {
     @Binding var limits: MeetingLimits
-    @State private var limitsCopy:MeetingLimits?
+    @EnvironmentObject var bleConnection:BLEManager
+
+    @State private var limitsCopy:MeetingLimits? // this is only used to detect changes and prompt user for save
+
     @State var isNew:Bool
     @State var isEditing:Bool
     @State var isChanged:Bool = false
@@ -126,6 +127,8 @@ struct DetailView: View
                 
                 Spacer()
                 
+                // need to change logic here to show error if
+                // BLE not yet connected
                 
                 NavigationLink(destination:LayFlat(limits:limits))
                 {

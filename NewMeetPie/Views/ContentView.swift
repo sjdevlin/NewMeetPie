@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var appState: AppState // for pop to root
 
-    @State var userData: [MeetingLimits] = getMeetingLimits() // Create object that monitors mics and tracks conversation
-    
+    @StateObject var bleConnection = BLEManager() // Create object that monitors mics and tracks conversation.  We do this here to ensure connection is there before starting meeting
+
+    @State var userData: [MeetingLimits] = getMeetingLimits() // Create struct that monitors mics and tracks conversation
+
     var body: some View
     {
         NavigationView
@@ -47,7 +48,6 @@ struct ContentView: View {
                         }
                     }
                 }}
-            .id(appState.rootViewId)
             .navigationBarItems(trailing: Button
                 {
                 userData.append(MeetingLimits(meetingName: "New Meeting", meetingDurationMins: 30, maxShareVoice: 50, maxTurnLengthSecs: 90, alwaysVisible: true))
@@ -60,8 +60,8 @@ struct ContentView: View {
             
                 .font(Font.system(size: 30))
                 .navigationBarTitleDisplayMode(.inline)
+                .environmentObject(bleConnection)
         }
-        
     }
 }
 
