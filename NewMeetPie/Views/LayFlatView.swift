@@ -13,34 +13,41 @@ struct LayFlat: View {
     let limits:MeetingLimits
 
     // maybe we dont need environment object below
-    @EnvironmentObject var bleConnection:BLEManager
-    @State var delayFinished:Bool = false
+    @State var readyToMonitor:Bool = false
     
     var body: some View {
-        VStack(alignment: .center)
+        NavigationView
         {
-            NavigationLink(destination: MonitorView(limits: limits), isActive: $delayFinished,
-                           label: { EmptyView() }
-            ).navigationBarHidden(true)
-                .navigationBarBackButtonHidden(true)
-
-            Spacer()
-            Text ("Place phone on the desk\n with the charging port\npointing towards you ")
-                .font(.system(size: 22))
-                .frame(width:300)
-                .multilineTextAlignment(.center)
-            Spacer()
-            Image("iphoneline")
-                .resizable()
-                .frame(width: 200, height:200)
-                .scaledToFit()
-                .onAppear(perform: {DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    delayFinished = true
-                    }
-                })
+            VStack(alignment: .center)
+            {
+                NavigationLink(destination: MonitorView(limits: limits), isActive: $readyToMonitor,
+                               label: { EmptyView() }
+                ).navigationBarHidden(true)
+                    .navigationBarBackButtonHidden(true)
                 
-            Spacer()
-        }
+                
+                
+                Spacer()
+                Text ("Place your phone on the desk.\n\n Ensure the dot on the Meetpie\nis pointing towards you ")
+                    .font(.system(size: 22))
+                    .frame(width:300)
+                    .multilineTextAlignment(.center)
+                Spacer()
+                Spacer()
+                Image("iphoneline")
+                    .resizable()
+                    .frame(width: 200, height:200)
+                    .scaledToFit()
+                    .onAppear(perform: {DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        readyToMonitor = true
+                        print ("ready to start monitoring")
+                    }
+                    })
+                
+                Spacer()
+            }
+        }.navigationViewStyle(.stack)
+        
     }
 }
         

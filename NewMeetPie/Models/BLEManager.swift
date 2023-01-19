@@ -20,6 +20,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
             super.init()
             myCentral = CBCentralManager(delegate: self, queue: nil)
             myCentral.delegate = self
+        print ("ble at least was initialised")
         }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -77,7 +78,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
         case K.MeetPieDataCBUUID:
 
             BleStr = String(decoding: characteristic.value!, as: UTF8.self)
-            print (BleStr)
+//            print ("Bluetooth update arrived:")
+//            print (BleStr)
 
             
             default:
@@ -85,13 +87,6 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
         }
 
     }
-    
-    
-    
-    
-    
-    
-    
     
 }
 

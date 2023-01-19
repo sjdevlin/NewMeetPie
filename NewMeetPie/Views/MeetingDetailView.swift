@@ -40,8 +40,10 @@ struct DetailView: View
     var body: some View
     {
         GeometryReader { reader in
+
             VStack
             {
+
 
                 if isEditing == true
                 {
@@ -111,7 +113,7 @@ struct DetailView: View
                             .padding([.leading,.trailing],30).onChange(of: limits.maxTurnLengthSecs, perform: {_ in isChanged = true})
                     }
                     
-                    Toggle(limits.alwaysVisible ? "Always Visible":"Alerts Only",
+                    Toggle("Always Visible",
                            isOn: $limits.alwaysVisible).disabled(!self.isEditing)
                         .onChange(of: limits.alwaysVisible, perform: {_ in isChanged = true})
                         .listRowBackground(Color.cyan)
@@ -132,7 +134,7 @@ struct DetailView: View
                 
                 NavigationLink(destination:LayFlat(limits:limits))
                 {
-                    Text ("Start").font(.system(size: 28).bold())
+                    Text (bleConnection.isConnected ? "Start" : "Waiting").font(.system(size: 28).bold())
                         .foregroundColor(Color.white)
                         .frame(minWidth: 200, minHeight: 60)
                 }
@@ -192,4 +194,5 @@ struct DetailView: View
         ).onAppear(){self.limitsCopy = limits}  // this creates a saved copy for when changes are discarded
         
     }
+    
 }

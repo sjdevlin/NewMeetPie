@@ -29,9 +29,14 @@ struct MonitorView: View {
                 {
                     TabView
                     {
-                        TimeView()
-                        ShareView()
-                        TurnView( maxTurnLength: limits.maxTurnLengthSecs)
+                        TimeView()  // these need to be circle
+                        ShareView()  //  and bezier
+                    }
+
+                    TabView
+                    {
+//                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar thing
+                        CurrentTurnTimeView( maxTurnLength: limits.maxTurnLengthSecs) // this is the timer for current turn
                     }
                     
                     Button("Pause") {
@@ -71,6 +76,7 @@ struct MonitorView: View {
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .environmentObject(meetingModel)
+            .onChange(of: bleConnection.BleStr) {newValue in meetingModel.update(newAngles: bleConnection.BleStr)}
     }
 
     }
@@ -88,6 +94,7 @@ struct MonitorView: View {
             
             VStack{
                 ZStack{
+
                     Circle()
                         .stroke(Color.gray)
                         .frame(width: 2 * kShareCircleRadius, height: 2 * kShareCircleRadius)
@@ -106,43 +113,39 @@ struct MonitorView: View {
                         .position(x:kOriginX,
                                   y:kOriginY )
                     
-                    let path = UIBezierPath()
+                    Text(String(meetingModel.elapsedTimeMins) + " mins").foregroundColor(Color.white)
+                        .font(.system(size: 32))
+
+                    
                     
                     ForEach (meetingModel.participant)
-                    {perpe in
+                    {person in
                         Circle()
-                            .fill(perpe.isTalking ? Color.white : Color.gray)
+                            .fill(person.color)
+                            .opacity(person.isTalking ? 1:0.5)
                             .frame(width: kCircleWidth, height: kCircleWidth)
-                            .position(x:kOriginX + (cos(perpe.angleRad) * kShareCircleRadius),
-                                      y:kOriginY + (sin(perpe.angleRad) * kShareCircleRadius))
-                        
+                            .position(x:kOriginX + (cos(person.angleRad) * kShareCircleRadius),
+                                      y:kOriginY + (sin(person.angleRad) * kShareCircleRadius))
                     }
+
                     
                 }
-                Text(String(meetingModel.elapsedTimeMins) + " Mins").foregroundColor(Color.white)
-                    .font(.system(size: 28))
-                Spacer()
             }
 
         }
     }
     
-    struct TurnView: View
+    struct CurrentTurnTimeView: View
     {
         @EnvironmentObject var meetingModel:MeetingModel
         let maxTurnLength:Int
         
-        let radius: CGFloat = 120
+        let radius: CGFloat = 100
         let pi = Double.pi
         let dotLength: CGFloat = 4
         let spaceLength: CGFloat = 10.8
         let dotCount = 60
-        let circumference: CGFloat = 754.1
-
-        let clientRadius: CGFloat = 75
-        let clientDotLength: CGFloat = 3
-        let clientSpaceLength: CGFloat = 8
-        let clientCircumference: CGFloat = 471.3
+        let circumference: CGFloat = 628
 
         
         var body: some View {
@@ -157,47 +160,93 @@ struct MonitorView: View {
                             .trim(from: 0.0, to: arcFraction)
                             .rotation(.degrees(-90))
                             .stroke(Color.white,
-                                style: StrokeStyle(lineWidth: 12, lineCap: .butt, lineJoin: .miter, miterLimit: 0, dash: [dotLength, spaceLength], dashPhase: 0))
+                                style: StrokeStyle(lineWidth: 10, lineCap: .butt, lineJoin: .miter, miterLimit: 0, dash: [dotLength, spaceLength], dashPhase: 0))
                             .frame(width: radius * 2, height: radius * 2)
                         
                         Circle()
                             .trim(from: 0.0, to: arcFractionLimit)
                             .rotation(.degrees(-90))
-                            .stroke(Color.gray,style: StrokeStyle(lineWidth:8))
+                            .stroke(Color.gray,style: StrokeStyle(lineWidth:2))
                             .frame(width:radius * 2.2, height:radius * 2.2)
                         
                         Text(String(meetingModel.participant[kCoach].currentTurnDuration)+" s")
-                            .font(.system(size: 65))
-                            .foregroundColor( Color.orange                 )
+                            .font(.system(size: 28))
+                            .foregroundColor( Color.white                 )
                     }
                 }
-
-                
-                
-                VStack {
-                    HStack {
-                        Spacer()
-                        Text ("Turn\nLength")
-                            .font(.system(size: 32))
-                            .foregroundColor(Color.white)
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                    }.padding(.top, 20)
-                    
-                    Spacer()
-                }
-                
-                
             }
         }
     }
+
+struct AllTurnsView: View {
+    @EnvironmentObject var meetingModel:MeetingModel
+    let maxTurnLength:Int
+    
+    var body: some View {
+        
+        VStack{
+
+            HStack (alignment: .bottom, spacing:0 ){
+                ForEach (meetingModel.history) { turn in
+                    
+                    Rectangle ()
+                        .fill(kParticipantColors[turn.talker])
+                        .frame(width:
+                            (meetingModel.history.count < 15 ?
+                             20 :  (300 / CGFloat(meetingModel.history.count)))
+                            , height:CGFloat(2 * turn.turnLengthSecs))
+                    
+                }
+                
+            }
+            
+            Divider()
+                .frame(height:2)
+                .overlay(Color(.lightGray))
+                .navigationBarTitle("Meeting Summary", displayMode: .inline)
+                .padding(.top, -10)
+                .padding(.leading, 50)
+                .padding(.trailing, 50)
+
+            
+        }
+        
+    }
+}
     
     struct ShareView_Previews: PreviewProvider {
         static var previews: some View {
             
-            ShareView().environmentObject(MeetingModel.example)
-                .preferredColorScheme(.dark)
+            
+            VStack
+            {
+                TabView
+                {
+                    ShareView().environmentObject(MeetingModel.example)
+                        .preferredColorScheme(.dark)
+                }.frame(height: kRectangleHeight)
 
+                TabView
+                {
+                    CurrentTurnTimeView(maxTurnLength: 90).environmentObject(MeetingModel.example)
+                        .preferredColorScheme(.dark)
+
+                    AllTurnsView(maxTurnLength: 90).environmentObject(MeetingModel.example)
+                        .preferredColorScheme(.dark)
+                }
+                
+                Button("Pause") {
+                }.foregroundColor(Color.white)
+                    .frame(minWidth: 200, minHeight: 60)
+                    .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.orange).opacity(0.5))
+                    .font(.system(size: 20))
+            }
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
+            
+            Spacer()
+            
+            
         }
     }
     

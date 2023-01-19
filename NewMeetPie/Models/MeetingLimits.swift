@@ -93,6 +93,9 @@ func defaultMeetingData() -> [MeetingLimits]{
     
     var defaultMeetingLimits:[MeetingLimits] = []
     
+    // max share needs to be calculated as the percentage OVER the average
+    // based on number of participants
+    
     defaultMeetingLimits.append(MeetingLimits(meetingName: "Weekly Team Meeting", meetingDurationMins: 45, maxShareVoice: 30, maxTurnLengthSecs: 90, alwaysVisible: true))
     defaultMeetingLimits.append(MeetingLimits(meetingName: "Brainstorming", meetingDurationMins: 60, maxShareVoice: 60, maxTurnLengthSecs: 180, alwaysVisible: false))
     defaultMeetingLimits.append(MeetingLimits(meetingName: "Counselling Session", meetingDurationMins: 50, maxShareVoice: 20, maxTurnLengthSecs: 60, alwaysVisible: false))

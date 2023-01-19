@@ -15,6 +15,9 @@
 		D71593CB28D2743900857B5D /* MeetingLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71593CA28D2743800857B5D /* MeetingLimits.swift */; };
 		D718572428D707A7000F046D /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = D718572328D707A7000F046D /* DequeModule */; };
 		D718572A28D709D1000F046D /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D718572928D709D1000F046D /* MonitorView.swift */; };
+		D77C1552295C892C0076B735 /* SplineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77C1551295C892C0076B735 /* SplineView.swift */; };
+		D77C1554295CD3870076B735 /* Circles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77C1553295CD3870076B735 /* Circles.swift */; };
+		D77C1556295CE9B40076B735 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77C1555295CE9B40076B735 /* temp.swift */; };
 		D79193DE295B05F9004E7B1A /* MeetingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79193DD295B05F9004E7B1A /* MeetingModel.swift */; };
 		D7B2B22F2948F03B00D23296 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2B22E2948F03B00D23296 /* Constants.swift */; };
 		D7C9923528DCF95200991B71 /* Constants and Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9923428DCF95200991B71 /* Constants and Globals.swift */; };
@@ -32,6 +35,9 @@
 		D70DD73D28D0BAFB00DDCFF0 /* MeetingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailView.swift; sourceTree = "<group>"; };
 		D71593CA28D2743800857B5D /* MeetingLimits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingLimits.swift; sourceTree = "<group>"; };
 		D718572928D709D1000F046D /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
+		D77C1551295C892C0076B735 /* SplineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplineView.swift; sourceTree = "<group>"; };
+		D77C1553295CD3870076B735 /* Circles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circles.swift; sourceTree = "<group>"; };
+		D77C1555295CE9B40076B735 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
 		D79193DD295B05F9004E7B1A /* MeetingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingModel.swift; sourceTree = "<group>"; };
 		D7B2B22D29473A1900D23296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D7B2B22E2948F03B00D23296 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -79,7 +85,6 @@
 				D70DD72F28D0B60600DDCFF0 /* ProfilesApp.swift */,
 				D70DD73328D0B60700DDCFF0 /* Assets.xcassets */,
 				D70DD73528D0B60700DDCFF0 /* Preview Content */,
-				D7B2B22E2948F03B00D23296 /* Constants.swift */,
 			);
 			path = NewMeetPie;
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 		D7E65CB228F086B800C07064 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				D7B2B22E2948F03B00D23296 /* Constants.swift */,
 				D7C9923428DCF95200991B71 /* Constants and Globals.swift */,
 			);
 			path = Constants;
@@ -116,6 +122,9 @@
 				D70DD73128D0B60600DDCFF0 /* ContentView.swift */,
 				D70DD73D28D0BAFB00DDCFF0 /* MeetingDetailView.swift */,
 				D718572928D709D1000F046D /* MonitorView.swift */,
+				D77C1551295C892C0076B735 /* SplineView.swift */,
+				D77C1553295CD3870076B735 /* Circles.swift */,
+				D77C1555295CE9B40076B735 /* temp.swift */,
 				D7E65C9328EE13F900C07064 /* LayFlatView.swift */,
 				D7C9923628E06D0B00991B71 /* SummaryView.swift */,
 			);
@@ -199,8 +208,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D70DD73228D0B60600DDCFF0 /* ContentView.swift in Sources */,
+				D77C1552295C892C0076B735 /* SplineView.swift in Sources */,
+				D77C1554295CD3870076B735 /* Circles.swift in Sources */,
 				D79193DE295B05F9004E7B1A /* MeetingModel.swift in Sources */,
 				D718572A28D709D1000F046D /* MonitorView.swift in Sources */,
+				D77C1556295CE9B40076B735 /* temp.swift in Sources */,
 				D71593CB28D2743900857B5D /* MeetingLimits.swift in Sources */,
 				D7B2B22F2948F03B00D23296 /* Constants.swift in Sources */,
 				D7CC4BE5294241A700997849 /* BLEManager.swift in Sources */,
