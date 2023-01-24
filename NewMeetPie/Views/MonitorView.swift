@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct MonitorView: View {
-    
+
+    @StateObject var bleConnection = BLEManager() // Create object that monitors mics and tracks conversation.  We do this here to ensure connection is there before starting meeting
+
     @StateObject var meetingModel = MeetingModel()
-    @EnvironmentObject var bleConnection:BLEManager
+//    @EnvironmentObject var bleConnection:BLEManager
     @State private var showingAlert = false
     @State private var meetingEnded = false
     
@@ -20,22 +22,23 @@ struct MonitorView: View {
     {
             ZStack
             {
-                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
+/*                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
                                label: { EmptyView() }
                 ).navigationBarHidden(true)
                     .navigationBarBackButtonHidden(true)
-                
+  */
                 VStack
                 {
                     TabView
                     {
-                        TimeView()  // these need to be circle
+//                        TimeView()  // these need to be circle
                         ShareView()  //  and bezier
+                        ShareViewCircle()  //  and bezier
                     }
 
                     TabView
                     {
-//                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar thing
+                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar thing
                         CurrentTurnTimeView( maxTurnLength: limits.maxTurnLengthSecs) // this is the timer for current turn
                     }
                     
@@ -68,11 +71,12 @@ struct MonitorView: View {
             .navigationBarBackButtonHidden(true)
                 
             .tabViewStyle(.page)
-            .onAppear(
+/*            .onAppear(
                 perform: {
                     meetingModel.startResumeMonitoring()
                 }
-            )
+ )*/  //may want to put this back
+        
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .environmentObject(meetingModel)
@@ -134,7 +138,69 @@ struct MonitorView: View {
 
         }
     }
+
+
+struct ShareViewCircle: View {
+    @EnvironmentObject var meetingModel:MeetingModel
     
+    var body: some View {
+        
+        VStack{
+            ZStack{
+
+                Circle()
+                    .stroke(Color.gray)
+                    .frame(width: 2 * kShareCircleRadius, height: 2 * kShareCircleRadius)
+                    .position(x:kOriginX,
+                              y:kOriginY )
+                
+                Circle()
+                    .stroke(Color.white)
+                    .frame(width: kShareCircleRadius * 1.5, height:  kShareCircleRadius * 1.5 )
+                    .position(x:kOriginX,
+                              y:kOriginY )
+                
+                Circle()
+                    .stroke(Color.gray)
+                    .frame(width: kShareCircleRadius * 2.5, height:  kShareCircleRadius * 2.5)
+                    .position(x:kOriginX,
+                              y:kOriginY )
+                
+                Text(String(meetingModel.elapsedTimeMins) + " mins").foregroundColor(Color.white)
+                    .font(.system(size: 32))
+
+                
+                ForEach (meetingModel.participant)
+                {person in
+                    Circle()
+                        .fill(Color.gray)
+                        .opacity(0.5)
+                        .frame(width: kCircleWidth * 2 * CGFloat(person.voiceShareNormal), height: kCircleWidth * 2 * CGFloat(person.voiceShareNormal))
+                    // consider squaring ?
+                        .position(x:kOriginX + (cos(person.angleRad) * kShareCircleRadius),
+                                  y:kOriginY + (sin(person.angleRad) * kShareCircleRadius))
+                }
+
+                
+                ForEach (meetingModel.participant)
+                {person in
+                    Circle()
+                        .fill(person.color)
+                        .opacity(person.isTalking ? 1:0.5)
+                        .frame(width: kCircleWidth , height: kCircleWidth )
+                        .position(x:kOriginX + (cos(person.angleRad) * kShareCircleRadius),
+                                  y:kOriginY + (sin(person.angleRad) * kShareCircleRadius))
+                }
+
+
+                
+            }
+        }
+
+    }
+}
+
+
     struct CurrentTurnTimeView: View
     {
         @EnvironmentObject var meetingModel:MeetingModel
@@ -151,7 +217,7 @@ struct MonitorView: View {
         var body: some View {
             
             let arcFractionLimit = CGFloat(maxTurnLength)/60
-            let arcFraction = CGFloat(meetingModel.participant[kCoach].currentTurnDuration)/60
+            let arcFraction = CGFloat(meetingModel.currentTurnLength/60)
             ZStack{
                 VStack{
 
@@ -169,7 +235,8 @@ struct MonitorView: View {
                             .stroke(Color.gray,style: StrokeStyle(lineWidth:2))
                             .frame(width:radius * 2.2, height:radius * 2.2)
                         
-                        Text(String(meetingModel.participant[kCoach].currentTurnDuration)+" s")
+
+                        Text(String(meetingModel.currentTurnLength) + " s")
                             .font(.system(size: 28))
                             .foregroundColor( Color.white                 )
                     }
@@ -223,6 +290,8 @@ struct AllTurnsView: View {
                 TabView
                 {
                     ShareView().environmentObject(MeetingModel.example)
+                        .preferredColorScheme(.dark)
+                    ShareViewCircle().environmentObject(MeetingModel.example)
                         .preferredColorScheme(.dark)
                 }.frame(height: kRectangleHeight)
 

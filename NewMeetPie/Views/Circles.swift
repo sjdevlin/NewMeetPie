@@ -52,21 +52,10 @@ struct CircleView: View {
                     .frame(width: circle_coord.radius*2, height: circle_coord.radius*2)
                 .opacity(0.75)}
 
-            ForEach(circle_coord) { circle_coord in
-                Circle().foregroundColor(Color.yellow)
-                    .position(circle_coord.point)
-                    .frame(width: 40, height: 40)
-                .opacity(0.75)}
-
-            ForEach(circle_coord) { circle_coord in
-                Circle().foregroundColor(Color.yellow)
-                    .position(circle_coord.point)
-                    .frame(width: 40, height: 40)
-                .opacity(0.75)}
 
             ForEach(circle_coord) { circle_coord in
                     Circle().foregroundColor(Color.gray)
-                        .position(circle_coord.point)
+                    .position(x:circle_coord.point.x-20,y:circle_coord.point.y-20 )
                         .frame(width: 20, height: 20)
                     .opacity(0.75)}
 

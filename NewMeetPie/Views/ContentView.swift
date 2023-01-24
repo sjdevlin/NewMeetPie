@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @StateObject var bleConnection = BLEManager() // Create object that monitors mics and tracks conversation.  We do this here to ensure connection is there before starting meeting
 
     @State var userData: [MeetingLimits] = getMeetingLimits() // Create struct that monitors mics and tracks conversation
 
@@ -60,7 +59,8 @@ struct ContentView: View {
                 .font(Font.system(size: 30))
                 .navigationBarTitleDisplayMode(.inline)
 
-        }.environmentObject(bleConnection)
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
 
     }
 }

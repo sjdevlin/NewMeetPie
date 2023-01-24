@@ -26,8 +26,9 @@ struct IntDoubleBinding {
 
 struct DetailView: View
 {
+    
+
     @Binding var limits: MeetingLimits
-    @EnvironmentObject var bleConnection:BLEManager
 
     @State private var limitsCopy:MeetingLimits? // this is only used to detect changes and prompt user for save
 
@@ -132,9 +133,9 @@ struct DetailView: View
                 // need to change logic here to show error if
                 // BLE not yet connected
                 
-                NavigationLink(destination:LayFlat(limits:limits))
+                NavigationLink(destination: MonitorView(limits: limits))
                 {
-                    Text (bleConnection.isConnected ? "Start" : "Waiting").font(.system(size: 28).bold())
+                    Text ("Start").font(.system(size: 28).bold())
                         .foregroundColor(Color.white)
                         .frame(minWidth: 200, minHeight: 60)
                 }
