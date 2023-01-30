@@ -9,12 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
 
-
     @State var userData: [MeetingLimits] = getMeetingLimits() // Create struct that monitors mics and tracks conversation
 
     var body: some View
     {
-        NavigationView
+        NavigationView()
         {
             VStack
             {

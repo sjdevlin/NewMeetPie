@@ -26,7 +26,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         
         if central.state == .poweredOn {
-            central.scanForPeripherals(withServices: nil, options: nil)
+            print("BLE Started")
+                central.scanForPeripherals(withServices: nil, options: nil)
            }
            else {
                print("Something wrong with BLE")

@@ -16,14 +16,14 @@ let kAngleSpread = 15
 
 let kOriginX = UIScreen.main.bounds.width * 0.5
 let kOriginY = UIScreen.main.bounds.width * 0.5
-let kShareCircleRadius:CGFloat = 150
 
 let kParticipantColors: [Color] = [Color.white, Color.green, Color.red, Color.blue, Color.orange, Color.cyan, Color.indigo]
 
 let kCircleWidth:CGFloat = 30.0
 
-let kRectangleWidth:CGFloat = UIScreen.main.bounds.width * 0.5
+let kRectangleWidth:CGFloat = UIScreen.main.bounds.width * 0.9
 let kRectangleHeight:CGFloat = UIScreen.main.bounds.height * 0.5
+let kShareCircleRadius:CGFloat = kRectangleWidth / 2.5
 
 let kShareRadius:CGFloat = 30.0
 

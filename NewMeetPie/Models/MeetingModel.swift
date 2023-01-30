@@ -91,13 +91,14 @@ class MeetingModel:ObservableObject {
 
     
     // this version of init only used to create example date
-    init(participant:[Participant], history:[Turn], elapsedTimeMins:Int) {
+    init(participant:[Participant], history:[Turn], elapsedTimeMins:Int, currentTurnLength:Int) {
         self.id = UUID()
         self.startTime = Date()
         self.timeOfLastUpdate = Date()
         self.participant = participant
         self.history = history
         self.elapsedTimeMins = elapsedTimeMins
+        self.currentTurnLength = currentTurnLength
         
     }
 
@@ -125,13 +126,10 @@ class MeetingModel:ObservableObject {
     
     func update (newAngles:String)
     {
-        if self.meetingPaused {return}
-        
         // parse the angles
         var activeSourceAngles:[Int] = []
         let stringArray = newAngles.components(separatedBy: ",")
-        print ("New Angles String received:")
-        print (stringArray)
+        print ("New Angles String received: \(stringArray)")
         
         for string in stringArray {
             if string != "" {activeSourceAngles.append(Int(string) ?? -1) }}
@@ -139,28 +137,31 @@ class MeetingModel:ObservableObject {
         // update elapsed time
         
         let timeNow = Date()
-        let timeDifference = Calendar.current.dateComponents([.minute, .second], from: self.timeOfLastUpdate, to:timeNow)
-        self.elapsedTimeMins += timeDifference.minute ?? 0
+        let timeDifference = Calendar.current.dateComponents([.second], from: self.timeOfLastUpdate, to:timeNow)
         self.timeOfLastUpdate = timeNow
-        // can use time of last update to check for connectivity ?
-        
+
+        let timeElapsed = Calendar.current.dateComponents([.minute], from: self.startTime, to:timeNow)
+        self.elapsedTimeMins = timeElapsed.minute ?? 0
+
         // All Angle stuff in here
         
         self.numberTalking = 0;
+        
         for participant in self.participant
         {
             participant.isTalking = false;
             participant.voiceShare = Float(participant.totalTalkTimeSecs) / Float(self.totalTalkTimeSecs)
+            if (participant.voiceShare.isNaN ) {participant.voiceShare = 0.01}
             participant.voiceShareNormal = participant.voiceShare * Float(self.numberOfParticipants)
         }
         
         for nextAngle in activeSourceAngles {
             
-            if self.participantAtAngle[nextAngle] == -1 && numberOfParticipants < kMaxParticipants
+            if self.participantAtAngle[nextAngle] == -1 && self.numberOfParticipants < kMaxParticipants
             {
-                let newParticipantNumber = numberOfParticipants
-                numberOfParticipants += 1
-                numberTalking += 1// another person is talking in this session
+                let newParticipantNumber = self.numberOfParticipants
+                self.numberOfParticipants += 1
+                self.numberTalking += 1// another person is talking in this session
                 
                 print("new participant added")
                 
@@ -191,15 +192,17 @@ class MeetingModel:ObservableObject {
             }else  // known talker
             {
                 
-                print ("Known talker.  Number: \(self.participantAtAngle[nextAngle])")
-                print ("Total Talk: \(self.totalTalkTimeSecs)  Voice Share: \(self.participant[self.participantAtAngle[nextAngle]].voiceShare)")
 
                 self.numberTalking += 1
                 if (self.numberTalking == 1) {
                     self.currentTurnLength += timeDifference.second ?? 0
                     self.totalTalkTimeSecs += timeDifference.second ?? 0
-                    
                 } // this logic avoids double counting the turn length when multiple talkers
+
+                print ("Known talker.  Number: \(self.participantAtAngle[nextAngle])")
+                print ("Total Talk: \(self.totalTalkTimeSecs)  Voice Share: \(self.participant[self.participantAtAngle[nextAngle]].voiceShare)")
+
+
                 self.participant[self.participantAtAngle[nextAngle]].totalTalkTimeSecs +=
                 timeDifference.second ?? 0 // add the num secs from last update
                 self.participant[self.participantAtAngle[nextAngle]].isTalking = true
@@ -209,9 +212,8 @@ class MeetingModel:ObservableObject {
             
         }
         if (self.numberTalking == 1) {
-            print ("1 talking")
 
-            // add logic for when there is no turns yet
+            // only assign turn holder when they are sole talker
             
             for (index, participant) in self.participant.enumerated()
             {
@@ -219,7 +221,6 @@ class MeetingModel:ObservableObject {
 
                     if (!self.FirstTurnStarted)
                     {
-                        print ("first turn started")
                         self.FirstTurnStarted = true
                         self.lastTalker = index
                         self.timeLastSpeakerChange = timeNow
@@ -229,7 +230,6 @@ class MeetingModel:ObservableObject {
                     if (self.lastTalker != index )
                     {
                       //  new turn created - save last turn
-                        print ("new turn detected")
                         self.history.append(Turn(talker: self.lastTalker!, turnLengthSecs: self.currentTurnLength))
                         self.lastTalker = index
                         self.timeLastSpeakerChange = timeNow
@@ -252,15 +252,6 @@ class MeetingModel:ObservableObject {
         }
     }
 
-    func pauseMonitoring ()
-    {}
-    func stopMonitoring ()
-    {}
-    func startResumeMonitoring ()
-    {
-        self.meetingPaused = !self.meetingPaused
-    }
-
     
 
 //  FOR PREVIEWS
@@ -276,7 +267,7 @@ class MeetingModel:ObservableObject {
     static let exampleHistory = [Turn(talker: 0, turnLengthSecs: 12),Turn(talker: 1, turnLengthSecs: 22), Turn(talker: 3, turnLengthSecs: 6),Turn(talker: 1, turnLengthSecs: 32),Turn(talker: 0,turnLengthSecs: 8),Turn(talker: 2,turnLengthSecs: 75),Turn(talker: 0, turnLengthSecs: 32),Turn(talker: 2, turnLengthSecs: 8),Turn(talker: 3, turnLengthSecs: 14),Turn(talker: 1, turnLengthSecs: 62), Turn(talker: 0,turnLengthSecs: 30)
     ]
 
-static let example = MeetingModel(participant:exampleParticipant, history: exampleHistory, elapsedTimeMins: 48)
+static let example = MeetingModel(participant:exampleParticipant, history: exampleHistory, elapsedTimeMins: 48, currentTurnLength: 23)
 
 
 

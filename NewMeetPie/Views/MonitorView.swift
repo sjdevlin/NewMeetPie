@@ -20,13 +20,15 @@ struct MonitorView: View {
     
     var body: some View
     {
+        
             ZStack
             {
-/*                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
+                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
                                label: { EmptyView() }
                 ).navigationBarHidden(true)
                     .navigationBarBackButtonHidden(true)
-  */
+  
+                
                 VStack
                 {
                     TabView
@@ -34,26 +36,28 @@ struct MonitorView: View {
 //                        TimeView()  // these need to be circle
                         ShareView()  //  and bezier
                         ShareViewCircle()  //  and bezier
-                    }
-
+                    }.frame( height: kRectangleHeight, alignment: .center)
+                    
                     TabView
                     {
                         AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar thing
                         CurrentTurnTimeView( maxTurnLength: limits.maxTurnLengthSecs) // this is the timer for current turn
                     }
                     
+                    
+                    
+                    
+                    
                     Button("Pause") {
-                        meetingModel.pauseMonitoring()
                         showingAlert = true
                     }.alert(isPresented:$showingAlert)
                     {
                         Alert(title: Text("Meeting Paused"),
                               primaryButton: .destructive(Text("End")) {
-                            meetingModel.stopMonitoring()
                             meetingEnded = true
                         },
                               secondaryButton: .destructive(Text("Resume")) {
-                            meetingModel.startResumeMonitoring()
+                            showingAlert = false
                         }
                         )
                     }.foregroundColor(Color.white)
@@ -80,7 +84,10 @@ struct MonitorView: View {
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .environmentObject(meetingModel)
-            .onChange(of: bleConnection.BleStr) {newValue in meetingModel.update(newAngles: bleConnection.BleStr)}
+            .onChange(of: bleConnection.BleStr)                 {newValue in
+                guard !showingAlert else {return}
+                meetingModel.update(newAngles: bleConnection.BleStr)}
+            
     }
 
     }
@@ -135,6 +142,7 @@ struct MonitorView: View {
                     
                 }
             }
+
 
         }
     }
@@ -206,18 +214,18 @@ struct ShareViewCircle: View {
         @EnvironmentObject var meetingModel:MeetingModel
         let maxTurnLength:Int
         
-        let radius: CGFloat = 100
+        let radius: CGFloat = kShareCircleRadius * 1.5
         let pi = Double.pi
         let dotLength: CGFloat = 4
-        let spaceLength: CGFloat = 10.8
+        let spaceLength: CGFloat = 10.95
         let dotCount = 60
-        let circumference: CGFloat = 628
 
         
         var body: some View {
             
             let arcFractionLimit = CGFloat(maxTurnLength)/60
-            let arcFraction = CGFloat(meetingModel.currentTurnLength/60)
+            let arcFraction = CGFloat(meetingModel.currentTurnLength)/60
+            let turnPercentage = CGFloat(meetingModel.currentTurnLength) / CGFloat(maxTurnLength)
             ZStack{
                 VStack{
 
@@ -225,15 +233,15 @@ struct ShareViewCircle: View {
                         Circle()
                             .trim(from: 0.0, to: arcFraction)
                             .rotation(.degrees(-90))
-                            .stroke(Color.white,
+                            .stroke((turnPercentage < kAmber) ?  Color.white: Color.orange,
                                 style: StrokeStyle(lineWidth: 10, lineCap: .butt, lineJoin: .miter, miterLimit: 0, dash: [dotLength, spaceLength], dashPhase: 0))
-                            .frame(width: radius * 2, height: radius * 2)
+                            .frame(width: radius - 10 , height: radius - 10)
                         
-                        Circle()
+                       Circle()
                             .trim(from: 0.0, to: arcFractionLimit)
                             .rotation(.degrees(-90))
-                            .stroke(Color.gray,style: StrokeStyle(lineWidth:2))
-                            .frame(width:radius * 2.2, height:radius * 2.2)
+                            .stroke(Color.white,style: StrokeStyle(lineWidth:1))
+                            .frame(width:radius, height:radius)
                         
 
                         Text(String(meetingModel.currentTurnLength) + " s")

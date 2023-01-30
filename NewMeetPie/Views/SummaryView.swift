@@ -14,9 +14,10 @@ struct SummaryView: View {
     var body: some View {
         VStack {
             Text ("Meeting Summary")
-        }
+                    }
     }
 }
+
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
         
