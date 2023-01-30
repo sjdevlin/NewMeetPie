@@ -93,9 +93,30 @@ struct DetailView: View
                     
                     if isEditing == true
                     {
-                        Slider(value: IntDoubleBinding($limits.maxShareVoice).doubleValue, in: 10...80.0, step: 5.0)
+                        Slider(value: IntDoubleBinding($limits.maxShareVoice).doubleValue, in: 100...150.0, step: 5.0)
                             .padding([.leading,.trailing],35).onChange(of: limits.maxShareVoice, perform: {_ in isChanged = true})
                     }
+                    
+
+                    HStack{
+                        Text("Min. Share")
+                        Spacer()
+                        Text(String(limits.minShareVoice))
+                        Text(" %")
+                    }
+                    .font(Font.system(size: 24))
+                    .padding([.leading,.trailing],35)
+                    .padding(.top, 20)
+                    
+                    
+                    if isEditing == true
+                    {
+                        Slider(value: IntDoubleBinding($limits.minShareVoice).doubleValue, in: 10...80.0, step: 5.0)
+                            .padding([.leading,.trailing],35).onChange(of: limits.minShareVoice, perform: {_ in isChanged = true})
+                    }
+
+                    
+                    
                     
                     HStack{
                         Text("Max. Turn Length")
@@ -106,6 +127,9 @@ struct DetailView: View
                     .font(Font.system(size: 24))
                     .padding([.leading,.trailing],35)
                     .padding(.top, 20)
+
+                    
+                    
                     
                     
                     if isEditing == true

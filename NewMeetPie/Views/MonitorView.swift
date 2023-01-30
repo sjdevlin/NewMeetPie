@@ -124,9 +124,14 @@ struct MonitorView: View {
                         .position(x:kOriginX,
                                   y:kOriginY )
                     
-                    Text(String(meetingModel.elapsedTimeMins) + " mins").foregroundColor(Color.white)
-                        .font(.system(size: 32))
-
+                    VStack {
+                        Text("Duration")
+                            .font(.system(size: 20))
+                            .foregroundColor( Color.white                 )
+                        
+                        Text(String(meetingModel.elapsedTimeMins) + " mins").foregroundColor(Color.white)
+                            .font(.system(size: 32))
+                    }
                     
                     
                     ForEach (meetingModel.participant)
@@ -173,10 +178,15 @@ struct ShareViewCircle: View {
                     .frame(width: kShareCircleRadius * 2.5, height:  kShareCircleRadius * 2.5)
                     .position(x:kOriginX,
                               y:kOriginY )
-                
-                Text(String(meetingModel.elapsedTimeMins) + " mins").foregroundColor(Color.white)
-                    .font(.system(size: 32))
 
+                VStack {
+                    Text("Duration")
+                        .font(.system(size: 20))
+                        .foregroundColor( Color.white                 )
+                    
+                    Text(String(meetingModel.elapsedTimeMins) + " mins").foregroundColor(Color.white)
+                        .font(.system(size: 32))
+                }
                 
                 ForEach (meetingModel.participant)
                 {person in
@@ -229,6 +239,7 @@ struct ShareViewCircle: View {
             ZStack{
                 VStack{
 
+
                     ZStack{
                         Circle()
                             .trim(from: 0.0, to: arcFraction)
@@ -244,9 +255,15 @@ struct ShareViewCircle: View {
                             .frame(width:radius, height:radius)
                         
 
-                        Text(String(meetingModel.currentTurnLength) + " s")
-                            .font(.system(size: 28))
-                            .foregroundColor( Color.white                 )
+                        VStack {
+                            Text("Current Turn")
+                                .font(.system(size: 20))
+                                .foregroundColor( Color.white                 )
+                            
+                            Text(String(meetingModel.currentTurnLength) + " s")
+                                .font(.system(size: 28))
+                                .foregroundColor( Color.white                 )
+                        }
                     }
                 }
             }
@@ -261,6 +278,7 @@ struct AllTurnsView: View {
         
         VStack{
 
+            Text("Turn History")
             HStack (alignment: .bottom, spacing:0 ){
                 ForEach (meetingModel.history) { turn in
                     
@@ -315,8 +333,8 @@ struct AllTurnsView: View {
                 Button("Pause") {
                 }.foregroundColor(Color.white)
                     .frame(minWidth: 200, minHeight: 60)
-                    .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.orange).opacity(0.5))
-                    .font(.system(size: 20))
+                    .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.orange).opacity(0.75))
+                    .font(.system(size: 24))
             }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)

@@ -17,7 +17,7 @@ let kAngleSpread = 15
 let kOriginX = UIScreen.main.bounds.width * 0.5
 let kOriginY = UIScreen.main.bounds.width * 0.5
 
-let kParticipantColors: [Color] = [Color.white, Color.green, Color.red, Color.blue, Color.orange, Color.cyan, Color.indigo]
+let kParticipantColors: [Color] = [Color.white, Color.green, Color.yellow, Color.blue, Color.pink, Color.cyan, Color.indigo]
 
 let kCircleWidth:CGFloat = 30.0
 

@@ -18,17 +18,19 @@ struct MeetingLimits: Codable
     var  meetingName: String
     var  meetingDurationMins: Int
     var  maxShareVoice: Int
+    var  minShareVoice: Int
     var  maxTurnLengthSecs: Int
     var  alwaysVisible: Bool
     
-    static let example = MeetingLimits(meetingName: "Interview", meetingDurationMins: 45, maxShareVoice: 35, maxTurnLengthSecs: 60, alwaysVisible: false)
+    static let example = MeetingLimits(meetingName: "Interview", meetingDurationMins: 45, maxShareVoice: 35, minShareVoice: 35, maxTurnLengthSecs: 60, alwaysVisible: false)
     
-    init(meetingName: String, meetingDurationMins: Int, maxShareVoice: Int, maxTurnLengthSecs: Int, alwaysVisible: Bool)
+    init(meetingName: String, meetingDurationMins: Int, maxShareVoice: Int, minShareVoice: Int, maxTurnLengthSecs: Int, alwaysVisible: Bool)
     {
         self.id = UUID()
         self.meetingName = meetingName
         self.meetingDurationMins = meetingDurationMins
         self.maxShareVoice = maxShareVoice
+        self.minShareVoice = minShareVoice
         self.maxTurnLengthSecs = maxTurnLengthSecs
         self.alwaysVisible = alwaysVisible
     }
@@ -96,9 +98,9 @@ func defaultMeetingData() -> [MeetingLimits]{
     // max share needs to be calculated as the percentage OVER the average
     // based on number of participants
     
-    defaultMeetingLimits.append(MeetingLimits(meetingName: "Weekly Team Meeting", meetingDurationMins: 45, maxShareVoice: 30, maxTurnLengthSecs: 90, alwaysVisible: true))
-    defaultMeetingLimits.append(MeetingLimits(meetingName: "Brainstorming", meetingDurationMins: 60, maxShareVoice: 60, maxTurnLengthSecs: 180, alwaysVisible: false))
-    defaultMeetingLimits.append(MeetingLimits(meetingName: "Counselling Session", meetingDurationMins: 50, maxShareVoice: 20, maxTurnLengthSecs: 60, alwaysVisible: false))
+    defaultMeetingLimits.append(MeetingLimits(meetingName: "Weekly Team Meeting", meetingDurationMins: 45, maxShareVoice: 130, minShareVoice: 75, maxTurnLengthSecs: 90, alwaysVisible: true))
+    defaultMeetingLimits.append(MeetingLimits(meetingName: "Brainstorming", meetingDurationMins: 60, maxShareVoice: 120, minShareVoice: 80,maxTurnLengthSecs: 180, alwaysVisible: false))
+    defaultMeetingLimits.append(MeetingLimits(meetingName: "Counselling Session", meetingDurationMins: 50, maxShareVoice: 110, minShareVoice: 90, maxTurnLengthSecs: 60, alwaysVisible: false))
     
     return(defaultMeetingLimits)
 }

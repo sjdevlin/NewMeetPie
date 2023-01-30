@@ -47,7 +47,7 @@ struct ContentView: View {
                 }}
             .navigationBarItems(trailing: Button
                 {
-                userData.append(MeetingLimits(meetingName: "New Meeting", meetingDurationMins: 30, maxShareVoice: 50, maxTurnLengthSecs: 90, alwaysVisible: true))
+                userData.append(MeetingLimits(meetingName: "New Meeting", meetingDurationMins: 30, maxShareVoice: 125, minShareVoice: 80, maxTurnLengthSecs: 90, alwaysVisible: true))
                 saveMeetingLimits(meetingLimits: userData)
                 }
                 label:
