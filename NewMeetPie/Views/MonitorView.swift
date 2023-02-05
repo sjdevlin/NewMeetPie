@@ -7,24 +7,31 @@
 
 import SwiftUI
 
-struct MonitorView: View {
+struct MonitorView: View
+{
 
     @StateObject var bleConnection = BLEManager() // Create object that monitors mics and tracks conversation.  We do this here to ensure connection is there before starting meeting
 
     @StateObject var meetingModel = MeetingModel()
 //    @EnvironmentObject var bleConnection:BLEManager
+
+    @Binding var path:NavigationPath
+
     @State private var showingAlert = false
     @State private var meetingEnded = false
     
     let limits:MeetingLimits
+    
     
     var body: some View
     {
         
             ZStack
             {
-                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
-                               label: { EmptyView() }
+                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits, path: $path), isActive: $meetingEnded,
+                               label: { EmptyView()            }
+                    
+
                 ).navigationBarHidden(true)
                     .navigationBarBackButtonHidden(true)
   
@@ -67,30 +74,30 @@ struct MonitorView: View {
                 }
                 .navigationBarHidden(true)
                 .navigationBarBackButtonHidden(true)
+
                 
                 Spacer()
                 
             }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-                
             .tabViewStyle(.page)
-/*            .onAppear(
-                perform: {
-                    meetingModel.startResumeMonitoring()
-                }
- )*/  //may want to put this back
-        
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .environmentObject(meetingModel)
-            .onChange(of: bleConnection.BleStr)                 {newValue in
+            .onAppear(
+                perform: {
+                // can we check bluetooth here
+                }
+            )
+            .onChange(
+                of: bleConnection.BleStr)                 {newValue in
                 guard !showingAlert else {return}
                 meetingModel.update(newAngles: bleConnection.BleStr)}
             
     }
 
-    }
+}
     
     
     
@@ -133,7 +140,16 @@ struct MonitorView: View {
                             .font(.system(size: 32))
                     }
                     
-                    
+                    Blob(input_points: meetingModel.participant)
+        //                .foregroundColor(Color(.darkGray))
+                        .fill(Color.gray)
+//                        .stroke(Color.white, lineWidth: 2)
+                        .opacity(0.4)
+                      //  .blur(radius: 15, opaque: false)
+                        .frame(width: kShareRadius, height:kShareRadius, alignment: .center)
+
+
+
                     ForEach (meetingModel.participant)
                     {person in
                         Circle()
@@ -345,10 +361,96 @@ struct AllTurnsView: View {
         }
     }
     
+
+struct Spline_data {
+    var point:CGPoint
+    var cp1:CGPoint
+    var cp2:CGPoint}
+
+    
+struct Blob: Shape {
+
+    var calc_points:[Spline_data] = []
+
+    init(input_points:[Participant])
+    {
+        var angleCp1:Double
+        var angleCp2:Double
+        var radiusCp1:Double
+        var radiusCp2:Double
+
+        var nextPoint:CGPoint
+        var nextCp1:CGPoint
+        var nextCp2:CGPoint
+        
+        let LastPoint = input_points.count-1
+        let inputPointsSorted = input_points.sorted(by: { $0.angle > $1.angle })
+        
+        for i in 0...LastPoint
+        {
+            // point
+            let angle = inputPointsSorted[i].angleRad
+            let radius = CGFloat(inputPointsSorted[i].voiceShareDeviation) * kShareCircleRadius
+            
+            let previousAngle =
+            (i != 0 ?
+             inputPointsSorted[i-1].angleRad
+             :
+                inputPointsSorted[LastPoint].angleRad
+            )
+
+            let previousRadius =
+            (i != 0 ?
+             CGFloat(inputPointsSorted[i-1].voiceShareDeviation) * kShareCircleRadius             :
+                CGFloat(inputPointsSorted[LastPoint].voiceShareDeviation) * kShareCircleRadius            )
+
+            let angleMid = abs(angle - previousAngle) / 1.5 > 0.4 ?
+            0.4 : abs(angle - previousAngle) / 1.5
+            
+            nextPoint = CGPoint(
+                x : CGFloat (radius * cos(angle)),
+                y : CGFloat (radius * sin(angle))
+            )
+            
+            // cp1
+            angleCp1 = previousAngle - angleMid
+            radiusCp1 = previousRadius / cos (angleMid)
+            
+            nextCp1 = CGPoint (
+                x: CGFloat(radiusCp1 * cos(angleCp1)),
+                y:   CGFloat(radiusCp1 * sin(angleCp1)))
+            
+            
+            // cp2
+            radiusCp2 =
+            CGFloat(inputPointsSorted[i].voiceShareDeviation) * kShareCircleRadius
+            / cos(angleMid)
+
+            angleCp2 = angle + angleMid
+            
+            nextCp2 = CGPoint (
+            x :CGFloat (radiusCp2 * cos(angleCp2)),
+        y: CGFloat (radiusCp2 * sin(angleCp2)))
+                        
+            self.calc_points.append(Spline_data(point: nextPoint, cp1: nextCp1, cp2: nextCp2))
+        }
+    }
     
     
-    
-    // this struct and view extension allows individually rounded corners
-    
-    
-    
+    func path(in rect: CGRect) -> Path {
+        
+        var path = Path()
+        
+        
+        path.move (to: calc_points[calc_points.count-1].point)
+
+        for curve in calc_points {
+            path.addCurve (to: curve.point, control1: curve.cp1, control2: curve.cp2)
+        }
+        
+        return path.offsetBy(dx: rect.midX, dy: rect.midY)
+    }
+        
+}
+
+

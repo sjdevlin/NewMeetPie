@@ -11,7 +11,7 @@ import CoreBluetooth
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeripheralDelegate {
     
     var myPeripheral: CBPeripheral!
-    var myCentral: CBCentralManager!
+    @Published var myCentral: CBCentralManager!
     
     @Published var isConnected = false
     @Published var BleStr:String = ""
@@ -79,9 +79,6 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
         case K.MeetPieDataCBUUID:
 
             BleStr = String(decoding: characteristic.value!, as: UTF8.self)
-//            print ("Bluetooth update arrived:")
-//            print (BleStr)
-
             
             default:
             print("Unhandled Characteristic UUID: \(characteristic.uuid)")

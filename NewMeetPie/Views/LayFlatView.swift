@@ -11,6 +11,7 @@ import CoreMotion
 struct LayFlat: View {
 
     let limits:MeetingLimits
+    @Binding var path:NavigationPath
 
     // maybe we dont need environment object below
     @State var readyToMonitor:Bool = false
@@ -20,7 +21,7 @@ struct LayFlat: View {
         {
             VStack(alignment: .center)
             {
-                NavigationLink(destination: MonitorView(limits: limits), isActive: $readyToMonitor,
+                NavigationLink(destination: MonitorView(path: $path, limits: limits), isActive: $readyToMonitor,
                                label: { EmptyView() }
                 ).navigationBarHidden(true)
                     .navigationBarBackButtonHidden(true)
@@ -53,7 +54,8 @@ struct LayFlat: View {
         
         struct Sheet_Previews: PreviewProvider {
             static var previews: some View {
-                LayFlat(limits:MeetingLimits.example).preferredColorScheme(.dark)
+                LayFlat(limits:MeetingLimits.example, path: .constant(NavigationPath()))
+                    .preferredColorScheme(.dark)
             }
         }
 

@@ -29,6 +29,7 @@ struct DetailView: View
     
 
     @Binding var limits: MeetingLimits
+    @Binding var path:NavigationPath
 
     @State private var limitsCopy:MeetingLimits? // this is only used to detect changes and prompt user for save
 
@@ -157,7 +158,7 @@ struct DetailView: View
                 // need to change logic here to show error if
                 // BLE not yet connected
                 
-                NavigationLink(destination: MonitorView(limits: limits))
+                NavigationLink(destination: LayFlat(limits: limits, path: $path))
                 {
                     Text ("Start").font(.system(size: 28).bold())
                         .foregroundColor(Color.white)
@@ -166,6 +167,7 @@ struct DetailView: View
                 .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.red))
                 .opacity(isEditing ? 0.0 : 100.0)
                 .padding()
+    
                 
                 
             }

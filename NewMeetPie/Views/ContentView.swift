@@ -9,11 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State var userData: [MeetingLimits] = getMeetingLimits() // Create struct that monitors mics and tracks conversation
+    @EnvironmentObject var appState: AppState // for pop to root
 
+    @State var userData: [MeetingLimits] = getMeetingLimits() // Create struct that monitors mics and tracks conversation
+    @State private var path = NavigationPath()
+    
     var body: some View
     {
-        NavigationView()
+        NavigationStack(path: $path)
         {
             VStack
             {
@@ -23,7 +26,7 @@ struct ContentView: View {
                 List ($userData, id: \.id)
                 {
                     $meetingDetails in
-                    NavigationLink(destination: DetailView(limits: $meetingDetails, isNew:false, isEditing: false))
+                    NavigationLink(destination: DetailView(limits: $meetingDetails, path:$path, isNew:false, isEditing: false))
                     {
                         Text(meetingDetails.meetingName)
                             .font(Font.system(size: 24))
@@ -54,7 +57,7 @@ struct ContentView: View {
                 {
                 Label("Add", systemImage:"plus.circle.fill")
                 }).tint(.orange)
-            
+       //        .id(appState.rootViewId)
                 .font(Font.system(size: 30))
                 .navigationBarTitleDisplayMode(.inline)
 

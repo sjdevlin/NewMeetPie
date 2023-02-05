@@ -21,6 +21,7 @@
 		D7C9923728E06D0B00991B71 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9923628E06D0B00991B71 /* SummaryView.swift */; };
 		D7CC4BE5294241A700997849 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CC4BE4294241A700997849 /* BLEManager.swift */; };
 		D7E65C9428EE13F900C07064 /* LayFlatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E65C9328EE13F900C07064 /* LayFlatView.swift */; };
+		D7FE10A5298ACA0F003942A7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FE10A4298ACA0F003942A7 /* AppState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		D7C9923628E06D0B00991B71 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		D7CC4BE4294241A700997849 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		D7E65C9328EE13F900C07064 /* LayFlatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayFlatView.swift; sourceTree = "<group>"; };
+		D7FE10A4298ACA0F003942A7 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		D7E65CB128F0869800C07064 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D7FE10A4298ACA0F003942A7 /* AppState.swift */,
 				D79193DD295B05F9004E7B1A /* MeetingModel.swift */,
 				D71593CA28D2743800857B5D /* MeetingLimits.swift */,
 				D7CC4BE4294241A700997849 /* BLEManager.swift */,
@@ -201,6 +204,7 @@
 				D70DD73228D0B60600DDCFF0 /* ContentView.swift in Sources */,
 				D79193DE295B05F9004E7B1A /* MeetingModel.swift in Sources */,
 				D718572A28D709D1000F046D /* MonitorView.swift in Sources */,
+				D7FE10A5298ACA0F003942A7 /* AppState.swift in Sources */,
 				D71593CB28D2743900857B5D /* MeetingLimits.swift in Sources */,
 				D7B2B22F2948F03B00D23296 /* Constants.swift in Sources */,
 				D7CC4BE5294241A700997849 /* BLEManager.swift in Sources */,

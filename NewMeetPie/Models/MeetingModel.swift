@@ -152,7 +152,7 @@ class MeetingModel:ObservableObject {
             participant.isTalking = false;
             participant.voiceShare = Float(participant.totalTalkTimeSecs) / Float(self.totalTalkTimeSecs)
             if (participant.voiceShare.isNaN ) {participant.voiceShare = 0.01}
-            participant.voiceShareNormal = participant.voiceShare * Float(self.numberOfParticipants)
+            participant.voiceShareDeviation = participant.voiceShare * Float(self.numberOfParticipants)
         }
         
         for nextAngle in activeSourceAngles {
