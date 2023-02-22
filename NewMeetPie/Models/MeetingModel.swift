@@ -33,7 +33,7 @@ class Participant:Identifiable {
         self.voiceShare = 0.01
         self.voiceShareDeviation = 1
         
-        print ("Particiapnt created")
+        print ("Participant created")
 
     }
     

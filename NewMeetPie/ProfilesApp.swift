@@ -21,7 +21,8 @@ struct ProfilesApp: App {
     // reloads the starting page
     
     @ObservedObject var appState = AppState()
-
+    
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
