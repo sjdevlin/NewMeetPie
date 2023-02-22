@@ -7,15 +7,17 @@
 
 import SwiftUI
 
+// This view is the real time monitoring view for the meeting
+// it connects to the BLE peripheral and maintains all the meeting
+// stats using the MeetingModel struct
+
+
 struct MonitorView: View
 {
-
     @StateObject var bleConnection = BLEManager() // Create object that monitors mics and tracks conversation.  We do this here to ensure connection is there before starting meeting
 
     @StateObject var meetingModel = MeetingModel()
 //    @EnvironmentObject var bleConnection:BLEManager
-
-    @Binding var path:NavigationPath
 
     @State private var showingAlert = false
     @State private var meetingEnded = false
@@ -25,37 +27,42 @@ struct MonitorView: View
     
     var body: some View
     {
-        
             ZStack
             {
-                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits, path: $path), isActive: $meetingEnded,
+                // The link here is to the summary screen.  This is only activated when meeting as ended,
+                // which is set in the button logic
+                
+                NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
                                label: { EmptyView()            }
                     
-
                 ).navigationBarHidden(true)
                     .navigationBarBackButtonHidden(true)
   
                 
                 VStack
                 {
+                    // The two styles of conveying share and turn info are both horizontal tab views
+                    // each can be scrolled independently
+
                     TabView
                     {
-//                        TimeView()  // these need to be circle
-                        ShareView()  //  and bezier
-                        ShareViewCircle()  //  and bezier
+                        ShareView()  //  This is the spline version of the meeting speech map
+                        ShareViewCircle()  //  This is the circle version of the speech map
                     }.frame( height: kRectangleHeight, alignment: .center)
                     
                     TabView
                     {
-                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar thing
+                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar
                         CurrentTurnTimeView( maxTurnLength: limits.maxTurnLengthSecs) // this is the timer for current turn
                     }
                     
                     
                     
                     
+                    // The button logic here allows pausing and ending
                     
-                    Button("Pause") {
+                    Button(bleConnection.isConnected ?
+                           "Pause" : "Connecting") {
                         showingAlert = true
                     }.alert(isPresented:$showingAlert)
                     {
@@ -69,7 +76,7 @@ struct MonitorView: View
                         )
                     }.foregroundColor(Color.white)
                         .frame(minWidth: 200, minHeight: 60)
-                        .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.orange).opacity(0.5))
+                        .background(RoundedRectangle(cornerRadius: 12   ).fill((bleConnection.isConnected ? Color.orange : Color.red)).opacity(0.6))
                         .font(.system(size: 20))
                 }
                 .navigationBarHidden(true)
@@ -80,16 +87,19 @@ struct MonitorView: View
                 
             }
             .navigationBarHidden(true)
+            .environmentObject(meetingModel)
             .navigationBarBackButtonHidden(true)
             .tabViewStyle(.page)
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-            .environmentObject(meetingModel)
             .onAppear(
                 perform: {
-                // can we check bluetooth here
+// could do something here
                 }
             )
+
+        // This modifier ensures the updating of the view every time
+        // that new data is available from the BLE peripheral
             .onChange(
                 of: bleConnection.BleStr)                 {newValue in
                 guard !showingAlert else {return}
@@ -113,24 +123,24 @@ struct MonitorView: View
             VStack{
                 ZStack{
 
-                    Circle()
+  /*                  Circle()
                         .stroke(Color.gray)
                         .frame(width: 2 * kShareCircleRadius, height: 2 * kShareCircleRadius)
                         .position(x:kOriginX,
                                   y:kOriginY )
-                    
+    */
                     Circle()
                         .stroke(Color.white)
                         .frame(width: kShareCircleRadius * 1.5, height:  kShareCircleRadius * 1.5 )
                         .position(x:kOriginX,
                                   y:kOriginY )
                     
-                    Circle()
+/*                    Circle()
                         .stroke(Color.gray)
                         .frame(width: kShareCircleRadius * 2.5, height:  kShareCircleRadius * 2.5)
                         .position(x:kOriginX,
                                   y:kOriginY )
-                    
+  */
                     VStack {
                         Text("Duration")
                             .font(.system(size: 20))
@@ -177,24 +187,24 @@ struct ShareViewCircle: View {
         VStack{
             ZStack{
 
-                Circle()
+/*                Circle()
                     .stroke(Color.gray)
                     .frame(width: 2 * kShareCircleRadius, height: 2 * kShareCircleRadius)
                     .position(x:kOriginX,
                               y:kOriginY )
-                
+  */
                 Circle()
                     .stroke(Color.white)
                     .frame(width: kShareCircleRadius * 1.5, height:  kShareCircleRadius * 1.5 )
                     .position(x:kOriginX,
                               y:kOriginY )
                 
-                Circle()
+/*                Circle()
                     .stroke(Color.gray)
                     .frame(width: kShareCircleRadius * 2.5, height:  kShareCircleRadius * 2.5)
                     .position(x:kOriginX,
                               y:kOriginY )
-
+*/
                 VStack {
                     Text("Duration")
                         .font(.system(size: 20))
@@ -209,7 +219,7 @@ struct ShareViewCircle: View {
                     Circle()
                         .fill(Color.gray)
                         .opacity(0.5)
-                        .frame(width: kCircleWidth * 2 * CGFloat(person.voiceShareNormal), height: kCircleWidth * 2 * CGFloat(person.voiceShareNormal))
+                        .frame(width: kCircleWidth * 2 * CGFloat(person.voiceShareDeviation), height: kCircleWidth * 2 * CGFloat(person.voiceShareDeviation))
                     // consider squaring ?
                         .position(x:kOriginX + (cos(person.angleRad) * kShareCircleRadius),
                                   y:kOriginY + (sin(person.angleRad) * kShareCircleRadius))

@@ -36,6 +36,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected!")
+        central.stopScan()
         peripheral.discoverServices([K.MeetPieCBUUID])
     }
     
@@ -56,6 +57,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
                 peripheral.setNotifyValue(true, for: characteristic)
                 self.isConnected = true
 
+
             }
         }
     }
@@ -65,7 +67,6 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
         if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
                        print (name)
                        if name == K.BTServiceName {
-                           central.stopScan()
                            self.myPeripheral = peripheral
                            self.myPeripheral.delegate = self
                            central.connect(peripheral, options: nil)

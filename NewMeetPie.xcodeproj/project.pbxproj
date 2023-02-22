@@ -33,6 +33,7 @@
 		D70DD73D28D0BAFB00DDCFF0 /* MeetingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailView.swift; sourceTree = "<group>"; };
 		D71593CA28D2743800857B5D /* MeetingLimits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingLimits.swift; sourceTree = "<group>"; };
 		D718572928D709D1000F046D /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
+		D742341529A6597F007590B9 /* Story.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		D79193DD295B05F9004E7B1A /* MeetingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingModel.swift; sourceTree = "<group>"; };
 		D7B2B22D29473A1900D23296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D7B2B22E2948F03B00D23296 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 				D70DD73128D0B60600DDCFF0 /* ContentView.swift */,
 				D70DD73D28D0BAFB00DDCFF0 /* MeetingDetailView.swift */,
 				D718572928D709D1000F046D /* MonitorView.swift */,
+				D742341529A6597F007590B9 /* Story.h */,
 				D7E65C9328EE13F900C07064 /* LayFlatView.swift */,
 				D7C9923628E06D0B00991B71 /* SummaryView.swift */,
 			);

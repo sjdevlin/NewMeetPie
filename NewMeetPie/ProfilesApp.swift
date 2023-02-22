@@ -10,10 +10,17 @@ import SwiftUI
 @main
 
 struct ProfilesApp: App {
+  
+    
+    // This environment variable is the simplest way
+    // I found for popping all windows in the
+    // navigation view back to the root
+    
+    // By storing and then changing the UUID of the
+    // root page - this pops all the children and
+    // reloads the starting page
     
     @ObservedObject var appState = AppState()
-
-    // this is to allow pop to root for iOS version under 16
 
     var body: some Scene {
         WindowGroup {
@@ -24,3 +31,6 @@ struct ProfilesApp: App {
         }
     }
 }
+
+
+

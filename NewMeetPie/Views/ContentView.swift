@@ -10,13 +10,17 @@ import SwiftUI
 struct ContentView: View {
 
     @EnvironmentObject var appState: AppState // for pop to root
-
-    @State var userData: [MeetingLimits] = getMeetingLimits() // Create struct that monitors mics and tracks conversation
-    @State private var path = NavigationPath()
     
+    // The following struct stores all the parameters and limits
+    // for different meeting types.  These are editable and saveable
+    // on the next detail screen.  Changes are stored locally on the
+    // user's device.
+        
+    @State var userData: [MeetingLimits] = getMeetingLimits()
+
     var body: some View
     {
-        NavigationStack(path: $path)
+        NavigationView()
         {
             VStack
             {
@@ -26,11 +30,12 @@ struct ContentView: View {
                 List ($userData, id: \.id)
                 {
                     $meetingDetails in
-                    NavigationLink(destination: DetailView(limits: $meetingDetails, path:$path, isNew:false, isEditing: false))
+                    NavigationLink(destination: DetailView(limits: $meetingDetails, isNew:false, isEditing: false))
                     {
                         Text(meetingDetails.meetingName)
                             .font(Font.system(size: 24))
                             .padding(6)
+
                     }
                     .swipeActions
                     {
@@ -57,9 +62,10 @@ struct ContentView: View {
                 {
                 Label("Add", systemImage:"plus.circle.fill")
                 }).tint(.orange)
-       //        .id(appState.rootViewId)
-                .font(Font.system(size: 30))
-                .navigationBarTitleDisplayMode(.inline)
+               .id(appState.rootViewId)  // used for pop to root <-
+               .font(Font.system(size: 30))
+               .navigationBarTitleDisplayMode(.inline)
+
 
         }
         .navigationViewStyle(StackNavigationViewStyle())

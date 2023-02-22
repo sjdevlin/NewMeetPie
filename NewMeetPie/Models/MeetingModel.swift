@@ -16,7 +16,7 @@ class Participant:Identifiable {
     var angleRad:CGFloat
     var isTalking:Bool
     var numTurns: Int = 1 //  Need to check this
-    var totalTalkTimeSecs: Int = 0
+    var totalTalkTimeSecs: Int = 1
     var voiceShare:Float = 0.01
     var voiceShareNormal:Float = 2.0
     var voiceShareDeviation: Float = 1.0
@@ -29,7 +29,7 @@ class Participant:Identifiable {
         self.angleRad = CGFloat (angle) * 3.142 / 180
         self.isTalking = isTalking
         self.numTurns = 0
-        self.totalTalkTimeSecs = 0
+        self.totalTalkTimeSecs = 1
         self.voiceShare = 0.01
         self.voiceShareDeviation = 1
         
@@ -79,7 +79,7 @@ class MeetingModel:ObservableObject {
     @Published var startTime:Date
     @Published var timeOfLastUpdate:Date
     @Published var elapsedTimeMins:Int
-    @Published var totalTalkTimeSecs:Int = 0
+    @Published var totalTalkTimeSecs:Int = 1
     @Published var participantAtAngle = [Int](repeating: -1, count: 360)
     @Published var numberOfParticipants:Int = 1
     @Published var timeLastSpeakerChange:Date?
@@ -91,7 +91,7 @@ class MeetingModel:ObservableObject {
 
     
     // this version of init only used to create example date
-    init(participant:[Participant], history:[Turn], elapsedTimeMins:Int, currentTurnLength:Int) {
+    init(participant:[Participant], history:[Turn], elapsedTimeMins:Int, currentTurnLength:Int, totalTalkTimeSecs:Int) {
         self.id = UUID()
         self.startTime = Date()
         self.timeOfLastUpdate = Date()
@@ -99,7 +99,8 @@ class MeetingModel:ObservableObject {
         self.history = history
         self.elapsedTimeMins = elapsedTimeMins
         self.currentTurnLength = currentTurnLength
-        
+        self.totalTalkTimeSecs = totalTalkTimeSecs
+
     }
 
     init() {
@@ -145,14 +146,21 @@ class MeetingModel:ObservableObject {
 
         // All Angle stuff in here
         
+        print ("Total Talk: \(self.totalTalkTimeSecs)  Number Talking: \(self.numberTalking)")
         self.numberTalking = 0;
-        
+
         for participant in self.participant
         {
             participant.isTalking = false;
             participant.voiceShare = Float(participant.totalTalkTimeSecs) / Float(self.totalTalkTimeSecs)
             if (participant.voiceShare.isNaN ) {participant.voiceShare = 0.01}
             participant.voiceShareDeviation = participant.voiceShare * Float(self.numberOfParticipants)
+            
+            if (participant.voiceShareDeviation > 2) {participant.voiceShareDeviation = 2}
+            if (participant.voiceShareDeviation < 0.25) {participant.voiceShareDeviation = 0.25}
+
+            print ("Angle: \(participant.angle) Talktime: \(participant.totalTalkTimeSecs) Totaltalk: \(self.totalTalkTimeSecs) Share: \(participant.voiceShare) Deviation:\(participant.voiceShareDeviation)")
+
         }
         
         for nextAngle in activeSourceAngles {
@@ -186,7 +194,7 @@ class MeetingModel:ObservableObject {
                         self.participantAtAngle[nextAngle - index] = newParticipantNumber
                     }else
                     {
-                        self.participantAtAngle[361 - index] = newParticipantNumber
+                        self.participantAtAngle[360 - index] = newParticipantNumber
                     }
                 }
             }else  // known talker
@@ -198,9 +206,6 @@ class MeetingModel:ObservableObject {
                     self.currentTurnLength += timeDifference.second ?? 0
                     self.totalTalkTimeSecs += timeDifference.second ?? 0
                 } // this logic avoids double counting the turn length when multiple talkers
-
-                print ("Known talker.  Number: \(self.participantAtAngle[nextAngle])")
-                print ("Total Talk: \(self.totalTalkTimeSecs)  Voice Share: \(self.participant[self.participantAtAngle[nextAngle]].voiceShare)")
 
 
                 self.participant[self.participantAtAngle[nextAngle]].totalTalkTimeSecs +=
@@ -256,18 +261,18 @@ class MeetingModel:ObservableObject {
 
 //  FOR PREVIEWS
 
-    static let exampleParticipant = [Participant(angle: 90, isTalking: true, participantNumber: 0, numTurns: 5, totalTalkTimeSecs: 456, voiceShare: 0.34, voiceShareDeviation: 1.1),
-    Participant(angle: 150, isTalking: false, participantNumber: 1, numTurns: 5,   totalTalkTimeSecs: 999, voiceShare: 0.66, voiceShareDeviation: 0.8),
-                                     Participant(angle: 220, isTalking: false, participantNumber: 2, numTurns: 2,  totalTalkTimeSecs: 999, voiceShare: 0.16, voiceShareDeviation: 0.5),
-                                     Participant(angle: 280, isTalking: false, participantNumber: 3, numTurns: 5,   totalTalkTimeSecs: 999, voiceShare: 0.46, voiceShareDeviation: 1.3),
-                                     Participant(angle: 340, isTalking: false, participantNumber: 4, numTurns: 5,   totalTalkTimeSecs: 999, voiceShare: 0.46, voiceShareDeviation: 1.3),
-                                     Participant(angle: 40, isTalking: false, participantNumber: 5, numTurns: 5,   totalTalkTimeSecs: 999, voiceShare: 0.46, voiceShareDeviation: 1.3)
+    static let exampleParticipant = [Participant(angle: 90, isTalking: true, participantNumber: 0, numTurns: 5, totalTalkTimeSecs: 400, voiceShare: 0.34, voiceShareDeviation: 1.1),
+    Participant(angle: 150, isTalking: false, participantNumber: 1, numTurns: 5,   totalTalkTimeSecs: 600, voiceShare: 0.66, voiceShareDeviation: 0.8),
+                                     Participant(angle: 220, isTalking: false, participantNumber: 2, numTurns: 2,  totalTalkTimeSecs: 250, voiceShare: 0.16, voiceShareDeviation: 0.5),
+                                     Participant(angle: 280, isTalking: false, participantNumber: 3, numTurns: 5,   totalTalkTimeSecs: 50, voiceShare: 0.46, voiceShareDeviation: 1.3),
+                                     Participant(angle: 340, isTalking: false, participantNumber: 4, numTurns: 5,   totalTalkTimeSecs: 100, voiceShare: 0.46, voiceShareDeviation: 1.3),
+                                     Participant(angle: 40, isTalking: false, participantNumber: 5, numTurns: 5,   totalTalkTimeSecs: 200, voiceShare: 0.46, voiceShareDeviation: 1.3)
     ]
 
     static let exampleHistory = [Turn(talker: 0, turnLengthSecs: 12),Turn(talker: 1, turnLengthSecs: 22), Turn(talker: 3, turnLengthSecs: 6),Turn(talker: 1, turnLengthSecs: 32),Turn(talker: 0,turnLengthSecs: 8),Turn(talker: 2,turnLengthSecs: 75),Turn(talker: 0, turnLengthSecs: 32),Turn(talker: 2, turnLengthSecs: 8),Turn(talker: 3, turnLengthSecs: 14),Turn(talker: 1, turnLengthSecs: 62), Turn(talker: 0,turnLengthSecs: 30)
     ]
 
-static let example = MeetingModel(participant:exampleParticipant, history: exampleHistory, elapsedTimeMins: 48, currentTurnLength: 23)
+static let example = MeetingModel(participant:exampleParticipant, history: exampleHistory, elapsedTimeMins: 48, currentTurnLength: 23, totalTalkTimeSecs: 1600)
 
 
 

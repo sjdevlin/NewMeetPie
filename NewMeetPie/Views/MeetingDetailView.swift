@@ -26,12 +26,14 @@ struct IntDoubleBinding {
 
 struct DetailView: View
 {
-    
+    // This struct is passed from the parent - and can be changed
+    // hence binding
 
     @Binding var limits: MeetingLimits
-    @Binding var path:NavigationPath
 
-    @State private var limitsCopy:MeetingLimits? // this is only used to detect changes and prompt user for save
+    // limitsCopy is used to detect if the user has changed any values
+    // and allows "prompt to save" logic
+    @State private var limitsCopy:MeetingLimits?
 
     @State var isNew:Bool
     @State var isEditing:Bool
@@ -46,14 +48,12 @@ struct DetailView: View
             VStack
             {
 
-
                 if isEditing == true
                 {
                     TextField("Name:",text:$limits.meetingName)
                         .font(Font.system(size: 28))
                         .frame(alignment: .center)
                         .padding(20)
- 
                 }
                 else
                 {
@@ -155,21 +155,22 @@ struct DetailView: View
                 
                 Spacer()
                 
-                // need to change logic here to show error if
-                // BLE not yet connected
+                // the destination screen is really just a poster
+                // shown for 3 or 4 seconds.
                 
-                NavigationLink(destination: LayFlat(limits: limits, path: $path))
+                // limits need to be sent through this screen as they
+                // are required by the monitoring screen
+                
+                NavigationLink(destination: LayFlat(limits: limits))
                 {
                     Text ("Start").font(.system(size: 28).bold())
                         .foregroundColor(Color.white)
                         .frame(minWidth: 200, minHeight: 60)
                 }
                 .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.red))
-                .opacity(isEditing ? 0.0 : 100.0)
+                .opacity(isEditing ? 0.0 : 100.0) // only shown when not editing !
                 .padding()
     
-                
-                
             }
             
         }
@@ -218,7 +219,8 @@ struct DetailView: View
                     }
                 )
         }
-        ).onAppear(){self.limitsCopy = limits}  // this creates a saved copy for when changes are discarded
+        ).onAppear(){self.limitsCopy = limits
+        }  // this creates a saved copy for when changes are discarded
         
     }
     
