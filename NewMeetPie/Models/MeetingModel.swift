@@ -157,7 +157,7 @@ class MeetingModel:ObservableObject {
             participant.voiceShareDeviation = participant.voiceShare * Float(self.numberOfParticipants)
             
             if (participant.voiceShareDeviation > 2) {participant.voiceShareDeviation = 2}
-            if (participant.voiceShareDeviation < 0.25) {participant.voiceShareDeviation = 0.25}
+            if (participant.voiceShareDeviation < 0.5) {participant.voiceShareDeviation = 0.25}
 
             print ("Angle: \(participant.angle) Talktime: \(participant.totalTalkTimeSecs) Totaltalk: \(self.totalTalkTimeSecs) Share: \(participant.voiceShare) Deviation:\(participant.voiceShareDeviation)")
 

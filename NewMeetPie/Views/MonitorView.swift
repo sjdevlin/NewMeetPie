@@ -46,14 +46,14 @@ struct MonitorView: View
 
                     TabView
                     {
-                        ShareView()  //  This is the spline version of the meeting speech map
                         ShareViewCircle()  //  This is the circle version of the speech map
+                        ShareView()  //  This is the spline version of the meeting speech map
                     }.frame( height: kRectangleHeight, alignment: .center)
                     
                     TabView
                     {
-                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar
                         CurrentTurnTimeView( maxTurnLength: limits.maxTurnLengthSecs) // this is the timer for current turn
+                        AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar
                     }
                     
                     
