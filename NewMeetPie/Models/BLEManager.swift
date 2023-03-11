@@ -79,7 +79,6 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
         switch characteristic.uuid {
         case K.MeetPieDataCBUUID:
 
-            BleStr = "" // this line forces BleStr to be marked as changed even when it hasn't
             BleStr = String(decoding: characteristic.value!, as: UTF8.self)
             
             default:

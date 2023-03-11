@@ -13,34 +13,113 @@ struct SummaryView: View {
     @EnvironmentObject var appState:AppState
     
     var body: some View {
-        VStack {
-            Text ("Meeting Summary")
-            Spacer()
-            Text ("Duration: \(meetingModel.elapsedTimeMins) Mins")                .font(.system(size:24))
+        ScrollView {
+            VStack {
+                Text ("Meeting Summary")
+                    .font(.system(size:24))
+                    .frame(height: 50)
+                
+                Text ("\(meetingModel.elapsedTimeMins) Mins")                .font(.system(size:28))
+                    .frame(height: 45)
+                Text ("\(meetingModel.numberOfParticipants) Participants")
+                    .font(.system(size:24))
+                
+                TurnShareView(meetingModel: meetingModel, limits: limits)
+                    .frame(height:kRectangleWidth * 0.85)
 
-            Spacer()
-            Text ("Number of People: \(meetingModel.numberOfParticipants)")
-                .font(.system(size:24))
-            Spacer()
-            
-//            Text ("Temp \(viewModel.path.count)")
-            Text ("Turn History:")
-            PieChartView(meeting: meetingModel)
-                .frame(width:kRectangleWidth*0.8, height:kRectangleWidth*0.8)
-            Spacer()
-            Button("Done", action: {appState.rootViewId = UUID()})
-                .font(.system(size:24))
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-                .padding(.leading, 30)
-                .padding(.trailing, 30)
-                .foregroundColor(.white)
-                .background(Color(.orange))
-                .clipShape(Capsule())
-                .padding(.top, 20)
-        }.navigationBarBackButtonHidden()
+                PieChartView(meeting: meetingModel)
+                    .frame(width:kRectangleWidth*0.75, height:kRectangleWidth)
+
+                TurnHistoryView(meetingModel: meetingModel, limits: limits)
+
+                
+                Spacer()
+                Button("Done", action: {appState.rootViewId = UUID()})
+                    .font(.system(size:24))
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
+                    .padding(.leading, 30)
+                    .padding(.trailing, 30)
+                    .foregroundColor(.white)
+                    .background(Color(.orange))
+                    .clipShape(Capsule())
+                    .padding(.top, 40)
+            }.navigationBarBackButtonHidden()
+        }
     }
 }
+
+
+struct TurnShareView: View {
+    let meetingModel: MeetingModel
+    let limits: MeetingLimits
+
+    var body: some View {
+    
+        VStack{
+            ZStack{
+
+                Circle()
+                    .stroke(Color.white)
+                    .frame(width: kShareCircleRadius, height:  kShareCircleRadius)
+                    .position(x:kOriginX,
+                              y:kOriginY - 50)
+                
+            ForEach (meetingModel.participant)
+                {person in
+                    Circle()
+                        .fill(person.color)
+                        .frame(width: kCircleWidth * 0.7, height: kCircleWidth * 0.7 )
+                        .position(x:kOriginX + (cos(person.angleRad) * kShareCircleRadius * 0.7),
+                                  y:kOriginY + (sin(person.angleRad) * kShareCircleRadius * 0.7) - 50)
+                }
+            }
+        }
+    }
+    
+}
+
+
+struct TurnHistoryView: View {
+    let meetingModel: MeetingModel
+    let limits: MeetingLimits
+
+    var body: some View {
+        
+        VStack{
+            
+            Text("Turn History")
+                .frame(height: 45)
+
+            HStack (alignment: .bottom, spacing:0 ){
+                ForEach (meetingModel.history) { turn in
+                    
+                    Rectangle ()
+                        .fill(kParticipantColors[turn.talker])
+                        .frame(width:
+                                (meetingModel.history.count < 15 ?
+                                 20 :  (300 / CGFloat(meetingModel.history.count)))
+                               , height:CGFloat(2 * turn.turnLengthSecs))
+                    
+                }
+                
+            }
+            
+            Divider()
+                .frame(height:2)
+                .overlay(Color(.lightGray))
+                .navigationBarTitle("Meeting Summary", displayMode: .inline)
+                .padding(.top, -10)
+                .padding(.leading, 50)
+                .padding(.trailing, 50)
+            
+            Text("Average Turn Duration: \(meetingModel.totalTalkTimeSecs / meetingModel.history.count ) s")
+            
+        }
+
+    }
+}
+
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
@@ -62,7 +141,7 @@ struct PieChartView: View {
         let sum = meeting.totalTalkTimeSecs
         var endDeg: Double = 90
         var tempSlices: [PieSliceData] = []
-        
+                
         for person in meeting.participant {
             let degrees: Double = Double(person.totalTalkTimeSecs * 360 / sum)
             tempSlices.append(PieSliceData(startAngle: Angle(degrees: endDeg), endAngle: Angle(degrees: endDeg + degrees), text: String(format: "%d%%", (person.totalTalkTimeSecs * 100) / sum), color: person.color))
@@ -75,6 +154,10 @@ struct PieChartView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack{
+                Text("Share of voice")
+                    .frame(height: 45)
+
+
                 ZStack{
                     ForEach(0..<meeting.participant.count){ i in
                         PieSliceView(pieSliceData: self.slices[i])

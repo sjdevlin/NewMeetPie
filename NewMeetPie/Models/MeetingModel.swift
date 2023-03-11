@@ -132,7 +132,7 @@ class MeetingModel:ObservableObject {
         let stringArray = newAngles.components(separatedBy: ",")
         print ("New Angles String received: \(stringArray)")
         
-        for string in stringArray {
+        for string in stringArray.dropFirst() {   // drop the first as this is just the packet ID
             if string != "" {activeSourceAngles.append(Int(string) ?? -1) }}
         
         // update elapsed time
@@ -264,9 +264,9 @@ class MeetingModel:ObservableObject {
     static let exampleParticipant = [Participant(angle: 90, isTalking: true, participantNumber: 0, numTurns: 5, totalTalkTimeSecs: 400, voiceShare: 0.34, voiceShareDeviation: 1.1),
     Participant(angle: 150, isTalking: false, participantNumber: 1, numTurns: 5,   totalTalkTimeSecs: 600, voiceShare: 0.66, voiceShareDeviation: 0.8),
                                      Participant(angle: 220, isTalking: false, participantNumber: 2, numTurns: 2,  totalTalkTimeSecs: 250, voiceShare: 0.16, voiceShareDeviation: 0.5),
-                                     Participant(angle: 280, isTalking: false, participantNumber: 3, numTurns: 5,   totalTalkTimeSecs: 50, voiceShare: 0.46, voiceShareDeviation: 1.3),
-                                     Participant(angle: 340, isTalking: false, participantNumber: 4, numTurns: 5,   totalTalkTimeSecs: 100, voiceShare: 0.46, voiceShareDeviation: 1.3),
-                                     Participant(angle: 40, isTalking: false, participantNumber: 5, numTurns: 5,   totalTalkTimeSecs: 200, voiceShare: 0.46, voiceShareDeviation: 1.3)
+                                     Participant(angle: 280, isTalking: false, participantNumber: 3, numTurns: 5,   totalTalkTimeSecs: 50, voiceShare: 0.46, voiceShareDeviation: 1.4),
+                                     Participant(angle: 340, isTalking: false, participantNumber: 4, numTurns: 5,   totalTalkTimeSecs: 100, voiceShare: 0.46, voiceShareDeviation: 1.15),
+                                     Participant(angle: 40, isTalking: false, participantNumber: 5, numTurns: 5,   totalTalkTimeSecs: 200, voiceShare: 0.46, voiceShareDeviation: 1.2)
     ]
 
     static let exampleHistory = [Turn(talker: 0, turnLengthSecs: 12),Turn(talker: 1, turnLengthSecs: 22), Turn(talker: 3, turnLengthSecs: 6),Turn(talker: 1, turnLengthSecs: 32),Turn(talker: 0,turnLengthSecs: 8),Turn(talker: 2,turnLengthSecs: 75),Turn(talker: 0, turnLengthSecs: 32),Turn(talker: 2, turnLengthSecs: 8),Turn(talker: 3, turnLengthSecs: 14),Turn(talker: 1, turnLengthSecs: 62), Turn(talker: 0,turnLengthSecs: 30)

@@ -46,7 +46,7 @@ struct MonitorView: View
 
                     TabView
                     {
-                        ShareViewCircle()  //  This is the circle version of the speech map
+                        ShareViewCircle(limits:limits)  //  This is the circle version of the speech map
                         ShareView()  //  This is the spline version of the meeting speech map
                     }.frame( height: kRectangleHeight, alignment: .center)
                     
@@ -180,8 +180,10 @@ struct MonitorView: View
 
 
 struct ShareViewCircle: View {
+
     @EnvironmentObject var meetingModel:MeetingModel
-    
+    let limits:MeetingLimits
+
     var body: some View {
         
         VStack{
@@ -217,7 +219,7 @@ struct ShareViewCircle: View {
                 ForEach (meetingModel.participant)
                 {person in
                     Circle()
-                        .fill(Color.gray)
+                        .fill((person.voiceShareDeviation * 100 ) > Float(limits.maxShareVoice) ?  Color.orange : Color.gray)
                         .opacity(0.5)
                         .frame(width: kCircleWidth * 2 * CGFloat(person.voiceShareDeviation), height: kCircleWidth * 2 * CGFloat(person.voiceShareDeviation))
                     // consider squaring ?
@@ -341,18 +343,18 @@ struct AllTurnsView: View {
             {
                 TabView
                 {
-                    ShareView().environmentObject(MeetingModel.example)
+                    ShareViewCircle(limits:MeetingLimits.example).environmentObject(MeetingModel.example)
                         .preferredColorScheme(.dark)
-                    ShareViewCircle().environmentObject(MeetingModel.example)
+                    ShareView().environmentObject(MeetingModel.example)
                         .preferredColorScheme(.dark)
                 }.frame(height: kRectangleHeight)
 
                 TabView
                 {
-                    CurrentTurnTimeView(maxTurnLength: 90).environmentObject(MeetingModel.example)
-                        .preferredColorScheme(.dark)
 
                     AllTurnsView(maxTurnLength: 90).environmentObject(MeetingModel.example)
+                        .preferredColorScheme(.dark)
+                    CurrentTurnTimeView(maxTurnLength: 90).environmentObject(MeetingModel.example)
                         .preferredColorScheme(.dark)
                 }
                 

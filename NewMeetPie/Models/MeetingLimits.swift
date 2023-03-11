@@ -22,7 +22,7 @@ struct MeetingLimits: Codable
     var  maxTurnLengthSecs: Int
     var  alwaysVisible: Bool
     
-    static let example = MeetingLimits(meetingName: "Interview", meetingDurationMins: 45, maxShareVoice: 35, minShareVoice: 35, maxTurnLengthSecs: 60, alwaysVisible: false)
+    static let example = MeetingLimits(meetingName: "Interview", meetingDurationMins: 45, maxShareVoice: 130, minShareVoice: 65, maxTurnLengthSecs: 60, alwaysVisible: false)
     
     init(meetingName: String, meetingDurationMins: Int, maxShareVoice: Int, minShareVoice: Int, maxTurnLengthSecs: Int, alwaysVisible: Bool)
     {

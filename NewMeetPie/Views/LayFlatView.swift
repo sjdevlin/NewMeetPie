@@ -18,7 +18,7 @@ struct LayFlat: View {
     var body: some View {
         NavigationView
         {
-            VStack(alignment: .center)
+            ZStack(alignment: .center)
             {
                 NavigationLink(destination: MonitorView(limits: limits), isActive: $readyToMonitor,
                                label: { EmptyView() }
@@ -26,17 +26,16 @@ struct LayFlat: View {
                     .navigationBarBackButtonHidden(true)
                 
                 
-                
-                Spacer()
-                Text ("Place your phone on the desk.\n\n Ensure the dot on the Meetpie\nis pointing towards you ")
-                    .font(.system(size: 22))
-                    .frame(width:300)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                Spacer()
+                VStack{
+                    Text ("Place your phone on the desk.\n\n Ensure the dot on the Meetpie\nis pointing towards you ")
+                        .position(x:UIScreen.main.bounds.width/2, y:150)
+                        .font(.system(size: 22))
+                        .frame(width:UIScreen.main.bounds.width)
+                        .multilineTextAlignment(.center)
+                }
                 Image("iphoneline")
                     .resizable()
-                    .frame(width: 200, height:200)
+                    .frame(width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height*0.9)
                     .scaledToFit()
                     .onAppear(perform: {
                         
