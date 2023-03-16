@@ -75,6 +75,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
 
         }
        
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        print("Disconnected!")
+        isConnected = false
+        central.scanForPeripherals(withServices: nil, options: nil)
+    }
+
+
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         switch characteristic.uuid {
         case K.MeetPieDataCBUUID:

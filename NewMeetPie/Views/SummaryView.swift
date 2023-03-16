@@ -113,7 +113,9 @@ struct TurnHistoryView: View {
                 .padding(.leading, 50)
                 .padding(.trailing, 50)
             
-            Text("Average Turn Duration: \(meetingModel.totalTalkTimeSecs / meetingModel.history.count ) s")
+            // following code checks for zero history
+            
+            Text("Average Turn Duration: \( meetingModel.history.count > 0 ? (meetingModel.totalTalkTimeSecs / meetingModel.history.count) : 0 ) s")
             
         }
 
