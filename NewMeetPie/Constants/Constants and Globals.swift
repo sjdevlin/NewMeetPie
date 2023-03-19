@@ -12,7 +12,7 @@ let kAmber = 0.85 // how close to limit before alert is triggered
 let kCoach = 0 // the meeting organiser
 
 let kMaxParticipants = 7
-let kAngleSpread = 15
+let kAngleSpread = 30
 
 let kOriginX = UIScreen.main.bounds.width * 0.5
 let kOriginY = UIScreen.main.bounds.width * 0.5

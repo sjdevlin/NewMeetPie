@@ -166,7 +166,9 @@ struct DetailView: View
                     Text ("Start").font(.system(size: 28).bold())
                         .foregroundColor(Color.white)
                         .frame(minWidth: 200, minHeight: 60)
+
                 }
+                .navigationBarBackButtonHidden(true)
                 .background(RoundedRectangle(cornerRadius: 12   ).fill(Color.red))
                 .opacity(isEditing ? 0.0 : 100.0) // only shown when not editing !
                 .padding()

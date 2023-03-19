@@ -39,7 +39,7 @@ struct LayFlat: View {
                     .scaledToFit()
                     .onAppear(perform: {
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         readyToMonitor = true
                         print ("ready to start monitoring")
                     }
@@ -48,6 +48,8 @@ struct LayFlat: View {
                 Spacer()
             }
         }.navigationViewStyle(.stack)
+            .navigationBarBackButtonHidden(true )
+
         
     }
 }

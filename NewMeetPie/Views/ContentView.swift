@@ -62,13 +62,15 @@ struct ContentView: View {
                 {
                 Label("Add", systemImage:"plus.circle.fill")
                 }).tint(.orange)
+//                .navigationViewStyle(StackNavigationViewStyle())
+//                .navigationBarBackButtonHidden(true)
                .id(appState.rootViewId)  // used for pop to root <-
                .font(Font.system(size: 30))
                .navigationBarTitleDisplayMode(.inline)
 
 
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarBackButtonHidden(true)
 
     }
 }

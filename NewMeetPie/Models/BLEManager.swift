@@ -27,7 +27,9 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
         
         if central.state == .poweredOn {
             print("BLE Started")
-                central.scanForPeripherals(withServices: nil, options: nil)
+    //        let service_array = [K.MeetPieCBUUID, K.MeetPieDataCBUUID, K.MeetPieCBUUID]
+  //              central.scanForPeripherals(withServices: service_array, options: nil)
+            central.scanForPeripherals(withServices: nil, options: nil)
            }
            else {
                print("Something wrong with BLE")
@@ -35,7 +37,6 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connected!")
         central.stopScan()
         peripheral.discoverServices([K.MeetPieCBUUID])
     }
@@ -43,6 +44,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
         for service in services {
+            print("Connected!")
+            print (service.includedServices ?? "None")
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
@@ -66,7 +69,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
        
         if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
                        print (name)
-                       if name == K.BTServiceName {
+                       if name == K.BTServiceName || name == K.BTServiceNameAlias {
                            self.myPeripheral = peripheral
                            self.myPeripheral.delegate = self
                            central.connect(peripheral, options: nil)

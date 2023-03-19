@@ -15,9 +15,9 @@ struct SummaryView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text ("Meeting Summary")
-                    .font(.system(size:24))
-                    .frame(height: 50)
+//                Text ("Meeting Summary")
+  //                  .font(.system(size:24))
+    //                .frame(height: 50)
                 
                 Text ("\(meetingModel.elapsedTimeMins) Mins")                .font(.system(size:28))
                     .frame(height: 45)

@@ -34,10 +34,10 @@ struct MonitorView: View
                 
                 NavigationLink(destination: SummaryView(meetingModel: meetingModel, limits: limits), isActive: $meetingEnded,
                                label: { EmptyView()            }
-                    
-                ).navigationBarHidden(true)
+                )
+                .navigationBarHidden(true)
                     .navigationBarBackButtonHidden(true)
-  
+
                 
                 VStack
                 {
@@ -48,14 +48,15 @@ struct MonitorView: View
                     {
                         ShareViewCircle(limits:limits)  //  This is the circle version of the speech map
                         ShareView()  //  This is the spline version of the meeting speech map
-                    }.frame( height: kRectangleHeight, alignment: .center)
+                    }.tabViewStyle(.page(indexDisplayMode: .never))  // < remove dots
+                    .frame( height: kRectangleHeight, alignment: .center)
                     
                     TabView
                     {
                         CurrentTurnTimeView( maxTurnLength: limits.maxTurnLengthSecs) // this is the timer for current turn
                         AllTurnsView( maxTurnLength: limits.maxTurnLengthSecs) // this is the history bar
                     }
-                    
+                    .tabViewStyle(.page(indexDisplayMode: .never)) // <  remove dots
                     
                     
                     
@@ -252,7 +253,7 @@ struct ShareViewCircle: View {
         @EnvironmentObject var meetingModel:MeetingModel
         let maxTurnLength:Int
         
-        let radius: CGFloat = kShareCircleRadius * 1.5
+        let radius: CGFloat = kShareCircleRadius * 1.2
         let pi = Double.pi
         let dotLength: CGFloat = 4
         let spaceLength: CGFloat = 10.95
