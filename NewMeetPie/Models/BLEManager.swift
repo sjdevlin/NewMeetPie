@@ -69,7 +69,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
        
         if let name = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
                        print (name)
-                       if name == K.BTServiceName || name == K.BTServiceNameAlias {
+                       if name == K.BTServiceName || name == K.BTServiceNameAlias || name == K.BTServiceNameAlias2 {
                            self.myPeripheral = peripheral
                            self.myPeripheral.delegate = self
                            central.connect(peripheral, options: nil)
@@ -78,12 +78,12 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate,CBPeriphe
 
         }
        
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+/*    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected!")
         isConnected = false
         central.scanForPeripherals(withServices: nil, options: nil)
     }
-
+*/
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         switch characteristic.uuid {

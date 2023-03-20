@@ -70,6 +70,7 @@ struct MonitorView: View
                         Alert(title: Text("Meeting Paused"),
                               primaryButton: .destructive(Text("End")) {
                             meetingEnded = true
+                            bleConnection.myCentral.cancelPeripheralConnection(bleConnection.myPeripheral)
                         },
                               secondaryButton: .destructive(Text("Resume")) {
                             showingAlert = false

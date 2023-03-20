@@ -15,5 +15,6 @@ struct K {
 
     static let BTServiceName = "raspberryp"
     static let BTServiceNameAlias = "Gobbledego"
+    static let BTServiceNameAlias2 = "BlueZ 5.50"
 
 }

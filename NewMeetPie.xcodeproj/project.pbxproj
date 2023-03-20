@@ -24,6 +24,20 @@
 		D7FE10A5298ACA0F003942A7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FE10A4298ACA0F003942A7 /* AppState.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		D7A2FE2629C87D2F00D5A117 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		D70DD72C28D0B60600DDCFF0 /* Meet Pie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meet Pie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70DD72F28D0B60600DDCFF0 /* ProfilesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesApp.swift; sourceTree = "<group>"; };
@@ -137,6 +151,7 @@
 				D70DD72A28D0B60600DDCFF0 /* Resources */,
 			);
 			buildRules = (
+				D7A2FE2629C87D2F00D5A117 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -348,8 +363,7 @@
 				INFOPLIST_FILE = NewMeetPie/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Meet Pie";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Meet Pie requires bletooth";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires permission to use the microphone";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This App needs bluetooth to communicate with the Meetpie device";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -387,8 +401,7 @@
 				INFOPLIST_FILE = NewMeetPie/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Meet Pie";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Meet Pie requires bletooth";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires permission to use the microphone";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This App needs bluetooth to communicate with the Meetpie device";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

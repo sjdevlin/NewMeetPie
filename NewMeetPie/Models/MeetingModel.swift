@@ -72,7 +72,7 @@ class MeetingModel:ObservableObject {
     
     let id:UUID
     @Published var participant:[Participant] = []
-    @Published var lastTalker: Int?
+    @Published var lastTalker: Int = kCoach
     @Published var CurrentTalker: Int?
     @Published var currentTalker: Int = kCoach
     @Published var history:[Turn] = []
@@ -235,7 +235,7 @@ class MeetingModel:ObservableObject {
                     if (self.lastTalker != index )
                     {
                       //  new turn created - save last turn
-                        self.history.append(Turn(talker: self.lastTalker!, turnLengthSecs: self.currentTurnLength))
+                        self.history.append(Turn(talker: self.lastTalker, turnLengthSecs: self.currentTurnLength))
                         self.lastTalker = index
                         self.timeLastSpeakerChange = timeNow
                         participant.numTurns += 1
